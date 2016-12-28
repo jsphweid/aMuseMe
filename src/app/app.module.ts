@@ -12,8 +12,6 @@ import { AngularFireModule } from 'angularfire2';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Modal Modules
-import { ModalModule } from 'angular2-modal';
-import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -35,7 +33,7 @@ export const firebaseConfig = {
     AppComponent,
     WelcomeComponent,
     AboutComponent,
-    ProjectTemplatesComponent
+    ProjectTemplatesComponent,
     CustomModalComponent
   ],
   imports: [
@@ -43,8 +41,6 @@ export const firebaseConfig = {
     CommonModule,
     HttpModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    ModalModule.forRoot(),
-    BootstrapModalModule,
     FormsModule,
     RouterModule.forRoot([
       { path: 'welcome', component: WelcomeComponent },
