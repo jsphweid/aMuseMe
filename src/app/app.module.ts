@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 // AngularFire
 import { AngularFireModule } from 'angularfire2';
@@ -18,6 +19,7 @@ import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { AboutComponent } from './about/about.component';
 import { ProjectTemplatesComponent } from './project-templates/project-templates.component';
+import { CustomModalComponent } from './custom-modal/custom-modal.component';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyAhK6cZF-p6UW8OI0saGRPxEJ1YvIkv8jI",
@@ -34,9 +36,12 @@ export const firebaseConfig = {
     WelcomeComponent,
     AboutComponent,
     ProjectTemplatesComponent
+    CustomModalComponent
   ],
   imports: [
     BrowserModule,
+    CommonModule,
+    HttpModule,
     AngularFireModule.initializeApp(firebaseConfig),
     ModalModule.forRoot(),
     BootstrapModalModule,
@@ -46,8 +51,7 @@ export const firebaseConfig = {
       { path: 'about', component: AboutComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
       { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
-    ]),
-    HttpModule
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]
