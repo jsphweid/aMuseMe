@@ -1,14 +1,14 @@
 import { Compiler, Component, Injector, TemplateRef, ViewChild, NgModuleRef, ViewContainerRef } from '@angular/core';
 import { AngularFire, FirebaseListObservable } from "angularfire2";
 
-import { CustomModalComponent } from '../custom-modal/custom-modal.component';
+import { QAModalComponent } from '../q-a-modal/q-a-modal.component';
 
 let runtimeModuleRefPromise: Promise<NgModuleRef<any>>;
 
 
 @Component({
   selector: 'app-project-templates',
-  providers: [CustomModalComponent],
+  providers: [QAModalComponent],
   templateUrl: './project-templates.component.html',
   styleUrls: ['./project-templates.component.css']
 })
@@ -20,14 +20,14 @@ export class ProjectTemplatesComponent {
 
 	constructor(
 		public af: AngularFire,
-		public customModal: CustomModalComponent,
+		public customModal: QAModalComponent,
 			) {
 		this.reference = af.database.list('reference');
 		
 	}
 
 	startModal(modalType) {
-		this.customModal.context;
+		// this.customModal.context;
 	}
 
 	data: any = {

@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { CustomModalComponent } from './custom-modal.component';
+import { QAModalComponent } from './q-a-modal.component';
 
-describe('CustomModalComponent', () => {
-  let component: CustomModalComponent;
-  let fixture: ComponentFixture<CustomModalComponent>;
+describe('QAModalComponent', () => {
+  let component: QAModalComponent;
+  let fixture: ComponentFixture<QAModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CustomModalComponent ]
+      declarations: [ QAModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CustomModalComponent);
+    fixture = TestBed.createComponent(QAModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

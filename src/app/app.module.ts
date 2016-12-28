@@ -12,12 +12,13 @@ import { AngularFireModule } from 'angularfire2';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Modal Modules
+import { ModalModule } from 'ng2-modal'
 
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { AboutComponent } from './about/about.component';
 import { ProjectTemplatesComponent } from './project-templates/project-templates.component';
-import { CustomModalComponent } from './custom-modal/custom-modal.component';
+import { QAModalComponent } from './q-a-modal/q-a-modal.component';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyAhK6cZF-p6UW8OI0saGRPxEJ1YvIkv8jI",
@@ -34,12 +35,13 @@ export const firebaseConfig = {
     WelcomeComponent,
     AboutComponent,
     ProjectTemplatesComponent,
-    CustomModalComponent
+    QAModalComponent
   ],
   imports: [
     BrowserModule,
     CommonModule,
     HttpModule,
+    ModalModule,
     AngularFireModule.initializeApp(firebaseConfig),
     FormsModule,
     RouterModule.forRoot([

@@ -1,0 +1,15 @@
+<div class="row">
+    <button (click)="myModal.open()">open my modal</button>
+    <modal #myModal>
+        <modal-header>
+            <h1>Modal header</h1>
+        </modal-header>
+        <modal-content>
+            Hello Modal!
+            <input>
+        </modal-content>
+        <modal-footer>
+            <button class="btn btn-primary" (click)="myModal.close()">close</button>
+        </modal-footer>
+    </modal>
+</div>
