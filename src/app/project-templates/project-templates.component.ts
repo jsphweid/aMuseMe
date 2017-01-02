@@ -1,5 +1,6 @@
 import { Compiler, Component, ViewChild, ElementRef } from '@angular/core';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from "angularfire2";
+import { Router } from '@angular/router';
 
 // TODO: This needs to be refactored so that the modal is separate from this project-templates,
 // Which is just the area where the buttons to initialize a new session go
@@ -43,12 +44,11 @@ export class ProjectTemplatesComponent {
 	currentQuestionsObservable: FirebaseListObservable<any[]>;
 
 	sessionsObservable: FirebaseListObservable<any[]>;
-	sessionsList: any[];
 
-	sessionObservable: FirebaseListObservable<any[]>;
-	sessionList: any[];
+	sessionObservable: FirebaseObjectObservable<any>;
+	session:any;
 
-	constructor(public af: AngularFire) {
+	constructor(public af: AngularFire, private router: Router) {
 		this.createQuestions = af.database.object('/reference');
 		this.sessionsObservable = af.database.list('/sessions');
 		// erase all
@@ -58,10 +58,6 @@ export class ProjectTemplatesComponent {
 		this.createQuestions.set(this.questions);
 
 		// establish observable <--> list subscription
-		this.sessionsObservable.subscribe((session) => {
-            this.sessionsList = session.concat([]);
-        })
-
 
 	}
 
@@ -73,8 +69,6 @@ export class ProjectTemplatesComponent {
 	currentQuestionIndex: number;
 	sessionKey: string;
 	textArea: string = "";
-	dataObservable: FirebaseListObservable<any[]>;
-	dataList: any[];
 	inputting: boolean = true;
 	
 
@@ -101,24 +95,22 @@ export class ProjectTemplatesComponent {
 			this.sessionKey = item.key;
 
 			// change pointer (?) of observable inside data // is this right????
-			this.sessionObservable = this.af.database.list('/sessions/' + item.key);
-			this.sessionObservable.subscribe(t => {
-				this.sessionList = t.concat([]);
-			});
+			this.sessionObservable = this.af.database.object('/sessions/' + item.key);
+			this.sessionObservable.subscribe(session => this.session = session);
 		});
 		
 		this.modal.open();
 	}
 
 	questionSubmit() {
-		console.log(this.sessionList)
 		// submit
 		let i = this.currentQuestionIndex;
-		let pushObj = {};
-		pushObj[i] = {  "question": this.bag1Questions[i].$value,
-						"answer": this.textArea.replace(/(?:\r\n|\r|\n)/g, '<br />')
-					};
-		this.sessionObservable.update('data', pushObj);
+		if (!this.session.data) this.session.data = [];
+		this.session.data.push({ 
+			 "question": this.bag1Questions[i].$value,
+			 "answer": this.textArea.replace(/(?:\r\n|\r|\n)/g, '<br />')
+		});
+		this.sessionObservable.update({data: this.session.data});
 
 		// erase text area and refocus
 		this.textArea = "";
@@ -131,17 +123,11 @@ export class ProjectTemplatesComponent {
 			this.inputting = false;
 		}
 
-		if (!this.dataObservable) {
-			this.dataObservable = this.af.database.list('/sessions/' + this.sessionKey + '/data');
-			this.dataObservable.subscribe(data => {
-				this.dataList = data.concat([]);
-			});
-		}
-
 	}
 
 	closeModal() {
-		this.dataList = undefined; // i have to do this or else [scrollTop]="scrollMe.scrollHeight" screws it up
+		this.session = undefined;
+		// this.dataList = undefined; // i have to do this or else [scrollTop]="scrollMe.scrollHeight" screws it up
 		this.modal.close()
 	}
 

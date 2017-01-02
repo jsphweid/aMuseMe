@@ -1,3 +1,4 @@
+<button class="templateBtn" (click)="router.navigate(['qasession'], {queryParams : {template: 'song'}})">Song</button>
 <button class="templateBtn" (click)="startModal('song')">Song</button>
 <button class="templateBtn" (click)="startModal('story')">Story</button>
 
@@ -15,19 +16,10 @@
         </modal-content>
 
         <modal-content *ngIf="bag1Questions">
-            
-            
-            <!--<table>
-                <tr *ngFor="let question of bag1Questions">
-                    <td>{{ question.$value }}</td>
-                </tr>
-            </table>-->
-
-            <!--history-->
-            <div #scrollMe *ngIf="dataList" [scrollTop]="scrollMe.scrollHeight" class="questionAnswerStyles">
-                <div *ngFor="let questionAnswer of dataList">
-                    <b class="question">{{ questionAnswer.question }}</b>
-                    <div [innerHTML]="questionAnswer.answer"></div>
+            <div #scrollMe *ngIf="session?.data"  [scrollTop]="scrollMe.scrollHeight" class="questionAnswerStyles">
+                <div *ngFor="let questionAnswer of session?.data">
+                    <b class="question">{{ questionAnswer?.question }}</b>
+                    <div [innerHTML]="questionAnswer?.answer"></div>
                 </div>
             </div>
 

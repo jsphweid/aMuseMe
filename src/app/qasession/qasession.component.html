@@ -1,0 +1,37 @@
+<h3 style="text-transform: uppercase;">New {{route?.snapshot?.queryParams['template']}} session</h3>
+
+<div *ngIf="template?.questions?.bag1">
+    <!--input-->
+    <div *ngIf="currentQuestionIndex != template.questions.bag1.length">
+
+        <!--question-->
+        <div>
+            <h1>{{ template.questions.bag1[currentQuestionIndex] }}</h1>
+        </div>
+
+
+        <!-- answer-->
+        <div class="form-group">
+            <label>Answer:</label>
+            <textarea class="form-control" rows="8" id="answer" [(ngModel)]="textArea"></textarea>
+        </div>
+
+        <div class="row">
+            <div class="questionBtns">
+                <button (click)="questionSubmit()" class="btn btn-success">Next</button>
+            </div>  
+        </div>
+
+    </div>
+
+
+    <div *ngIf="session?.data"   class="questionAnswerStyles">
+        <div *ngFor="let questionAnswer of session?.data">
+            <b class="question">{{ questionAnswer?.question }}</b>
+            <div [innerHTML]="questionAnswer?.answer"></div>
+        </div>
+    </div>
+
+
+    <button class="btn btn-primary" (click)="back()">Back</button>
+</div>
