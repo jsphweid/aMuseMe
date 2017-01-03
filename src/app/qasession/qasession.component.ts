@@ -62,7 +62,7 @@ export class QASessionComponent implements OnInit, OnDestroy {
             this.sessionObservable = this.af.database.object('/sessions/' + this.createdKey);
             this.sessionObservable.update({
                 stash: {
-                    textArea: this.textArea,
+                    textArea: this.textArea.replace(/(?:\r\n|\r|\n)/g, '<br />'),
                     currentQuestionIndex: this.currentQuestionIndex
                 }
             });
@@ -77,7 +77,7 @@ export class QASessionComponent implements OnInit, OnDestroy {
         }
         this.session.data.push({
             question: this.template.questions.bag1[this.currentQuestionIndex],
-            answer: this.textArea
+            answer: this.textArea.replace(/(?:\r\n|\r|\n)/g, '<br />')
         })
         this.sessionObservable.update({ data: this.session.data })
         this.currentQuestionIndex++

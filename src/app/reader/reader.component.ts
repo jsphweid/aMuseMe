@@ -25,7 +25,6 @@ export class ReaderComponent implements OnInit {
         this.sessionObservable = this.af.database.object('/sessions/' + this.sessionKey);
         this.sessionObservable.subscribe(session => {
             if (session.$exists()) {
-                console.log('exists man!!!!!!!!!!');
                 this.session = session
             } else {
                 this.couldNotFind = true;
