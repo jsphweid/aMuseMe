@@ -13,6 +13,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Modal Modules
 import { ModalModule } from 'ng2-modal'
+// DropdownModule
+import { DropdownModule } from "ng2-dropdown";
 
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -20,7 +22,8 @@ import { ProjectTemplatesComponent } from './project-templates/project-templates
 import { QASessionComponent } from './qasession/qasession.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ReaderComponent } from './reader/reader.component';
-import { RecreatorComponent } from './app.component'
+import { RecreatorComponent } from './app.component';
+import { QuestionVotingComponent } from './question-voting/question-voting.component'
 
 export const firebaseConfig = {
     apiKey: "AIzaSyAhK6cZF-p6UW8OI0saGRPxEJ1YvIkv8jI",
@@ -39,13 +42,15 @@ export const firebaseConfig = {
     QASessionComponent,
     SidebarComponent,
     ReaderComponent,
-    RecreatorComponent
+    RecreatorComponent,
+    QuestionVotingComponent
   ],
   imports: [
     BrowserModule,
     CommonModule, 
     HttpModule,
     ModalModule,
+    DropdownModule,
     AngularFireModule.initializeApp(firebaseConfig),
     FormsModule,
     RouterModule.forRoot([
@@ -53,6 +58,7 @@ export const firebaseConfig = {
       { path: 'qasession', component: QASessionComponent },
       { path: 'reader', component: ReaderComponent },
       { path: 'recreator', component: RecreatorComponent },
+      { path: 'questionVoting', component: QuestionVotingComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
       { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
     ])

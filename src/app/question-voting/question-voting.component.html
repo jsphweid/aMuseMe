@@ -1,0 +1,60 @@
+<div class="container">
+    <div class="row" style="text-align: center;">
+        <div class="col-md-2">
+            Template:
+        </div>
+        <div class="col-md-2">
+            Bag:
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="dropdown" dropdown [dropdownToggle]="false" (onClose)="templateChosen()">
+                <button class="btn select" dropdown-open>{{ (route?.snapshot?.queryParams['template'] || 'Choose') | uppercase}}</button>
+                <ul class="dropdown-menu">
+                    <li *ngFor="let template of templates">
+                        <a (click)="router.navigate(['questionVoting'], {queryParams : {template: template.$key, bag: 'choose' }})">{{ template.$key | uppercase }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div> 
+
+        <div class="col-md-2">
+            <div class="dropdown" dropdown [dropdownToggle]="false" (onClose)="initList()">
+                <button class="btn select" dropdown-open>{{ route?.snapshot?.queryParams['bag'] | uppercase }}</button>
+                <ul class="dropdown-menu">
+                    <li *ngFor="let bagName of questionBags">
+                        <a (click)="router.navigate(['questionVoting'], {queryParams : {template: route?.snapshot?.queryParams['template'], bag: bagName.$key }})">{{ bagName.$key | uppercase }}</a>
+                    </li>
+                </ul>
+            </div>            
+        </div>         
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        
+        <!--add new question-->
+        <div class="col-md-6">
+            <div class="newQuestion">
+                <p>Submit a new question to the <b>{{ route?.snapshot?.queryParams['template'] }}</b> database</p>
+                <textarea class="form-control" rows="4" id="submittedAnswer" [(ngModel)]="questionSubmitTextArea"></textarea>
+                <button (click)="submitQuestion()">Submit</button>    
+            </div>            
+        </div>
+        
+        <!--upvote area-->
+        <div class="col-md-6">
+            <div class="upvoteArea">
+                <table>
+                    <tr *ngFor="let q of currentQuestionList">
+                        <td>{{ q.votes }}</td>
+                        <td><button (click)="upvote(q.$key, q.question)">Upvote</button></td>
+                        <td>{{ q.question }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

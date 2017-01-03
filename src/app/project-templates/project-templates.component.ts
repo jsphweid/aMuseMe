@@ -17,39 +17,66 @@ import { Router } from '@angular/router';
 export class ProjectTemplatesComponent {
 
 	// restart every time stuff
-	// createQuestions: FirebaseObjectObservable<any>;
-	// questions: {} = {
-	// 	story: {
-	// 		questions: {
-	// 			bag1: [
-	// 				'Where are we?',
-	// 				'Who/What is there?',
-	// 				'What are they doing?'
-	// 			]
-	// 		}
-	// 	},
-	// 	song: {
-	// 		questions: {
-	// 			bag1: [
-	// 				'What\'s the first chord?',
-	// 				'What is the key?',
-	// 				'What is the song about?'
-	// 			]
-	// 		}
-	// 	}
-	// }
+	createQuestions: FirebaseObjectObservable<any>;
+	questions: {} = {
+		story: {
+			questions: {
+				bag1: [
+					{
+						question: 'Where are we?',
+						votes: 0
+					},
+					{
+						question: 'Who/What is there?',
+						votes: 0	
+					},
+					{
+						question: 'What are they doing?',
+						votes: 0	
+					}
+				]
+			}
+		},
+		song: {
+			questions: {
+				bag1: [
+					{
+						question: 'What is the first chord?',
+						votes: 0
+					},
+					{
+						question: 'What is the key?',
+						votes: 0	
+					},
+					{
+						question: 'What is the song about?',
+						votes: 0	
+					}
+				]
+			}
+		}
+	}
 
 
 	// firebase stuff
 	// currentQuestionsObservable: FirebaseListObservable<any[]>;
 
 	sessionsObservable: FirebaseListObservable<any[]>;
+	// referenceObservable: FirebaseObjectObservable<any>;
 
 	// sessionObservable: FirebaseObjectObservable<any>;
 	// session:any;
 
 	constructor(public af: AngularFire, private router: Router) {
 		this.sessionsObservable = af.database.list('/sessions');
+
+		// resetting, use below
+		// this.referenceObservable = af.database.object('/reference');
+		// this.referenceObservable.subscribe(reference => {
+			// reference = this.questions;
+		// });
+		// this.referenceObservable.update(this.questions);
+
 	}
 
 	// destroyAndNavigate(template) {

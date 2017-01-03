@@ -76,7 +76,7 @@ export class QASessionComponent implements OnInit, OnDestroy {
             this.session.data = []; // fix dummydata
         }
         this.session.data.push({
-            question: this.template.questions.bag1[this.currentQuestionIndex],
+            question: this.template.questions.bag1[this.currentQuestionIndex].question,
             answer: this.textArea.replace(/(?:\r\n|\r|\n)/g, '<br />')
         })
         this.sessionObservable.update({ data: this.session.data })
