@@ -29,9 +29,10 @@
 
             <!--HISTORY-->
             <div *ngIf="session?.data" class="questionAnswerStyles">
-                <div *ngFor="let questionAnswer of session?.data">
+                <div *ngFor="let questionAnswer of session?.data.slice().reverse()">
                     <b class="question">{{ questionAnswer?.question }}</b>
                     <div [innerHTML]="questionAnswer?.answer"></div>
+                    <br>
                 </div>
             </div>
 

@@ -1,0 +1,19 @@
+<p>
+    Input your session key below and click ENTER to bring up your session.
+</p>
+<input id="sessionKey" [(ngModel)]="sessionKey" type="text">
+<button (click)="getSession()">ENTER</button>
+
+<div *ngIf="couldNotFind">
+    <h1>Sorry, we could not find key {{ sessionKeySearch }}.</h1>
+</div>
+
+<br><br>
+
+<div *ngIf="session?.data" class="questionAnswerStyles">
+    <div *ngFor="let questionAnswer of session?.data.slice().reverse()">
+        <b class="question">{{ questionAnswer?.question }}</b>
+        <div [innerHTML]="questionAnswer?.answer"></div>
+        <br>
+    </div>
+</div>

@@ -16,10 +16,11 @@ import { ModalModule } from 'ng2-modal'
 
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { AboutComponent } from './about/about.component';
 import { ProjectTemplatesComponent } from './project-templates/project-templates.component';
 import { QASessionComponent } from './qasession/qasession.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { ReaderComponent } from './reader/reader.component';
+import { RecreatorComponent } from './app.component'
 
 export const firebaseConfig = {
     apiKey: "AIzaSyAhK6cZF-p6UW8OI0saGRPxEJ1YvIkv8jI",
@@ -34,22 +35,24 @@ export const firebaseConfig = {
   declarations: [
     AppComponent,
     WelcomeComponent,
-    AboutComponent,
     ProjectTemplatesComponent,
     QASessionComponent,
-    SidebarComponent
+    SidebarComponent,
+    ReaderComponent,
+    RecreatorComponent
   ],
   imports: [
     BrowserModule,
-    CommonModule,
+    CommonModule, 
     HttpModule,
     ModalModule,
     AngularFireModule.initializeApp(firebaseConfig),
     FormsModule,
     RouterModule.forRoot([
       { path: 'welcome', component: WelcomeComponent },
-      { path: 'about', component: AboutComponent },
       { path: 'qasession', component: QASessionComponent },
+      { path: 'reader', component: ReaderComponent },
+      { path: 'recreator', component: RecreatorComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
       { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
     ])
