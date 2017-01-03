@@ -1,39 +1,8 @@
-.templateBtn {
-    height: 100px;
-    width: 100px;
-    background-color: #faebd7;
+button {
+    height: 70px;
+    width: 70px;
+    background-color: #baac9a;
     border-radius: 4px;
-    box-shadow: none;
     border: 1px solid;
-}
-
-.questionBtns {
-    width: 200px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.questionAnswerStyles {
-    display: block;
-    overflow: scroll;
-    max-height: 300px;
-    word-wrap: break-word;
-    word-break: break-word;
-}
-
-.question {
-    font-size: 20px;
-}
-
-
-/*always show scrollbar when needed at all*/
-::-webkit-scrollbar {
-    -webkit-appearance: none;
-    width: 7px;
-}
-::-webkit-scrollbar-thumb {
-    border-radius: 4px;
-    background-color: rgba(0,0,0,.5);
-    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
-    box-shadow: 0 0 1px rgba(255,255,255,.5);
+    margin: 7px;
 }

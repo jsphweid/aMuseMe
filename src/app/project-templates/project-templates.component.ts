@@ -49,86 +49,89 @@ export class ProjectTemplatesComponent {
 	session:any;
 
 	constructor(public af: AngularFire, private router: Router) {
-		this.createQuestions = af.database.object('/reference');
+		// this.createQuestions = af.database.object('/reference');
 		this.sessionsObservable = af.database.list('/sessions');
 		// erase all
-		this.createQuestions.remove();
-		this.sessionsObservable.remove();
+		// this.createQuestions.remove();
+		// this.sessionsObservable.remove();
 		// re-establish this every time... for now...
-		this.createQuestions.set(this.questions);
+		// this.createQuestions.set(this.questions);
 
 		// establish observable <--> list subscription
 
 	}
 
+	removeSessionsData() {
+		this.sessionsObservable.remove();
+	}
 
 	// changes with square button selection
 	templateType: string;
 	// puts in specific questions to load
-	bag1Questions: any[];
-	currentQuestionIndex: number;
-	sessionKey: string;
-	textArea: string = "";
-	inputting: boolean = true;
+	// bag1Questions: any[];
+	// currentQuestionIndex: number;
+	// sessionKey: string;
+	// textArea: string = "";
+	// inputting: boolean = true;
 	
 
-	// bind 'myModal' to modal
-	@ViewChild('myModal') modal: any;
+	// // bind 'myModal' to modal
+	// @ViewChild('myModal') modal: any;
 
-	startModal(templateType) {
-		this.templateType = templateType;
-		this.textArea = "";
+	// startModal(templateType) {
+	// 	this.templateType = templateType;
+	// 	this.textArea = "";
 
-		// start with quesiton 0
-		this.currentQuestionIndex = 0;
+	// 	// start with quesiton 0
+	// 	this.currentQuestionIndex = 0;
 		
-		// get bag1 questions
-		this.currentQuestionsObservable = this.af.database.list('/reference/' + templateType + '/questions/bag1');
-		this.currentQuestionsObservable.subscribe(bag1 => {
-			this.bag1Questions = bag1.concat([]);
-		});
-		// create new session
-		this.sessionsObservable.push({
-			"createTime": new Date().getTime(),
-			"templateType": templateType
-		}).then((item) => {
-			this.sessionKey = item.key;
+	// 	// get bag1 questions
+	// 	this.currentQuestionsObservable = this.af.database.list('/reference/' + templateType + '/questions/bag1');
+	// 	this.currentQuestionsObservable.subscribe(bag1 => {
+	// 		this.bag1Questions = bag1.concat([]);
+	// 	});
+	// 	// create new session
+	// 	this.sessionsObservable.push({
+	// 		"createTime": new Date().getTime(),
+	// 		"templateType": templateType
+	// 	}).then((item) => {
+	// 		this.sessionKey = item.key;
 
-			// change pointer (?) of observable inside data // is this right????
-			this.sessionObservable = this.af.database.object('/sessions/' + item.key);
-			this.sessionObservable.subscribe(session => this.session = session);
-		});
+	// 		// change pointer (?) of observable inside data // is this right????
+	// 		this.sessionObservable = this.af.database.object('/sessions/' + item.key);
+	// 		this.sessionObservable.subscribe(session => this.session = session);
+	// 	});
 		
-		this.modal.open();
-	}
+	// 	this.modal.open();
+	// }
 
-	questionSubmit() {
-		// submit
-		let i = this.currentQuestionIndex;
-		if (!this.session.data) this.session.data = [];
-		this.session.data.push({ 
-			 "question": this.bag1Questions[i].$value,
-			 "answer": this.textArea.replace(/(?:\r\n|\r|\n)/g, '<br />')
-		});
-		this.sessionObservable.update({data: this.session.data});
+	// questionSubmit() {
+	// 	// submit
+	// 	let i = this.currentQuestionIndex;
+	// 	if (!this.session.data) this.session.data = [];
+	// 	this.session.data.push({ 
+	// 		 "question": this.bag1Questions[i].$value,
+	// 		 "answer": this.textArea.replace(/(?:\r\n|\r|\n)/g, '<br />')
+	// 	});
+	// 	this.sessionObservable.update({data: this.session.data});
 
-		// erase text area and refocus
-		this.textArea = "";
-		document.getElementById('answer').focus();
+	// 	// erase text area and refocus
+	// 	this.textArea = "";
+	// 	document.getElementById('answer').focus();
 
-		// advance
-		if (this.currentQuestionIndex < this.bag1Questions.length - 1) {
-			this.currentQuestionIndex++;
-		} else {
-			this.inputting = false;
-		}
+	// 	// advance
+	// 	if (this.currentQuestionIndex < this.bag1Questions.length - 1) {
+	// 		this.currentQuestionIndex++;
+	// 	} else {
+	// 		this.inputting = false;
+	// 	}
 
-	}
+	// }
 
-	closeModal() {
-		this.session = undefined;
-		// this.dataList = undefined; // i have to do this or else [scrollTop]="scrollMe.scrollHeight" screws it up
-		this.modal.close()
-	}
+	// closeModal() {
+	// 	this.session = undefined;
+	// 	// this.dataList = undefined; // i have to do this or else [scrollTop]="scrollMe.scrollHeight" screws it up
+	// 	this.modal.close()
+	// }
 
 }
