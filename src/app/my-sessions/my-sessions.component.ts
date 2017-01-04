@@ -1,15 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { AngularFire, AuthProviders } from 'angularfire2';
+import { LoginService } from '../login.service';
 
 @Component({
-  selector: 'app-my-sessions',
-  templateUrl: './my-sessions.component.html',
-  styleUrls: ['./my-sessions.component.css']
+    selector: 'app-my-session',
+    templateUrl: './my-sessions.component.html',
+    styleUrls: ['./my-sessions.component.css']
 })
-export class MySessionsComponent implements OnInit {
+export class MySessionsComponent {
+    name: string;
 
-  constructor() { }
+    constructor(public af: AngularFire, public loginService: LoginService) {
+    }
 
-  ngOnInit() {
-  }
+    login() {
+        this.loginService.login();
+    }
 
+    logout() {
+        this.loginService.logout();
+    }
+
+    loginAnonymously() {
+        this.loginService.loginAnonymous();
+    }
+
+    test() {
+        console.log(this.loginService.user);
+    }
 }

@@ -1,3 +1,20 @@
-<p>
-  my-sessions works!
-</p>
+<div> {{ (af.auth | async)?.uid }} </div>
+<div>
+    <p>
+        Logged in as: {{ loginService?.user?.auth?.displayName || "Anonymous"}}
+    </p>    
+</div>
+<button md-raised-button (click)="login()">
+  Use My Google Account
+</button>
+<button md-raised-button (click)="logout()">
+  Logout
+</button>
+
+<button (click)="test()">
+test  
+</button>
+
+<button (click)="loginAnonymously()">
+     login anonymously    
+</button>

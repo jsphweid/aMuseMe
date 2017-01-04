@@ -1,3 +1,10 @@
+<div class="container" style="padding-top: 5px; padding-bottom: 5px;">
+    <div class="row header">
+        Logged in as: {{ loginService?.user?.auth?.displayName || (loginService?.user?.anonymous && "Anonymous") }}
+        <button (click)="googleLogin()">Login with Google</button>
+        <button (click)="anonymousLogin()">Logout</button>
+    </div>
+</div>
 <div class='container'>
     <div class="row">
         <div class="col-md-3">

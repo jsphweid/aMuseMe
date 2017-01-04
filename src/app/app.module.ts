@@ -16,6 +16,9 @@ import { ModalModule } from 'ng2-modal'
 // DropdownModule
 import { DropdownModule } from "ng2-dropdown";
 
+// Login Service
+import { LoginService } from './login.service'
+
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { ProjectTemplatesComponent } from './project-templates/project-templates.component';
@@ -34,39 +37,44 @@ export const firebaseConfig = {
     messagingSenderId: "570604792009"
 };
 
+const myFirebaseAuthConfig = {
+    // provider: AuthProviders.Google,
+    method: AuthMethods.Redirect
+};
+
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    WelcomeComponent,
-    ProjectTemplatesComponent,
-    QASessionComponent,
-    SidebarComponent,
-    ReaderComponent,
-    RecreatorComponent,
-    QuestionVotingComponent,
-    MySessionsComponent
-  ],
-  imports: [
-    BrowserModule,
-    CommonModule, 
-    HttpModule,
-    ModalModule,
-    DropdownModule,
-    AngularFireModule.initializeApp(firebaseConfig),
-    FormsModule,
-    RouterModule.forRoot([
-      { path: 'welcome', component: WelcomeComponent },
-      { path: 'qasession', component: QASessionComponent },
-      { path: 'reader', component: ReaderComponent },
-      { path: 'recreator', component: RecreatorComponent },
-      { path: 'questionVoting', component: QuestionVotingComponent },
-      { path: 'mySessions', component: MySessionsComponent },
-      { path: '', redirectTo: 'welcome', pathMatch: 'full' },
-      { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
-    ])
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        WelcomeComponent,
+        ProjectTemplatesComponent,
+        QASessionComponent,
+        SidebarComponent,
+        ReaderComponent,
+        RecreatorComponent,
+        QuestionVotingComponent,
+        MySessionsComponent
+    ],
+    imports: [
+        BrowserModule,
+        CommonModule,
+        HttpModule,
+        ModalModule,
+        DropdownModule,
+        AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
+        FormsModule,
+        RouterModule.forRoot([
+            { path: 'welcome', component: WelcomeComponent },
+            { path: 'qasession', component: QASessionComponent },
+            { path: 'reader', component: ReaderComponent },
+            { path: 'recreator', component: RecreatorComponent },
+            { path: 'questionVoting', component: QuestionVotingComponent },
+            { path: 'mySessions', component: MySessionsComponent },
+            { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+            { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
+        ])
+    ],
+    providers: [LoginService],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { LoginService } from './login.service';
 
 
 @Component({
@@ -8,8 +9,19 @@ import { Router, ActivatedRoute } from '@angular/router';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    title = 'app works!';
+    constructor(public loginService: LoginService) {}
+
+    googleLogin() {
+        this.loginService.login();
+    }
+    anonymousLogin() {
+        this.loginService.loginAnonymous();
+    }
 }
+
+//////////////////////////////////////////////////////////////////////
+////////////////////    quick dirty redirect magic    ////////////////
+//////////////////////////////////////////////////////////////////////
 
 @Component({
     template: ''
