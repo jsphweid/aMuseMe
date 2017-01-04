@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { DropdownModule } from "ng2-dropdown";
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -11,16 +11,21 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class QuestionVotingComponent implements OnInit {
 
     templates: any[];
+    currentTemplate: string;
 
     questionsObservable: FirebaseListObservable<any[]>;
-    bagObservable: FirebaseListObservable<any[]>;
+    bagObservable: FirebaseListObservable<any>;
+
+    bagObjectObservable: FirebaseObjectObservable<any>;
+    userSubmitted: any;
 
     questionSubmitTextArea: string;
 
     currentQuestionObservable: FirebaseListObservable<any[]>;
+    submitObservable: FirebaseListObservable<any>;
     currentQuestionList: any;
 
-
+    isUserSubmitted: boolean;
     questionBags: any;
 
     constructor(public af: AngularFire, public route: ActivatedRoute, public router: Router) {
@@ -28,10 +33,13 @@ export class QuestionVotingComponent implements OnInit {
         this.questionsObservable.subscribe(templates => {
             this.templates = templates;
         });
+        this.initList();
+        this.templateChosen();
     }
 
     templateChosen() {
         this.route.queryParams.subscribe(queryParams => {
+            this.currentTemplate = queryParams['template'];
             this.bagObservable = this.af.database.list('/reference/' + queryParams['template'] + '/questions');
             this.bagObservable.subscribe(bags => {
                 this.questionBags = bags;
@@ -43,22 +51,42 @@ export class QuestionVotingComponent implements OnInit {
     }
 
     submitQuestion() {
-        // this.questionSubmitTextArea
-
+        this.userSubmitted.push({
+            question: this.questionSubmitTextArea,
+            votes: 0
+        });
+        this.bagObjectObservable.update(this.userSubmitted);
         this.questionSubmitTextArea = ""; // make blank
     }
 
-    upvote(a, b) {
-        
+    upvote(template, bag, q) {
+        let question:FirebaseListObservable<any> = this.af.database.list('/reference/' + template + '/questions/' + bag);
+        question.update(q.$key, {votes: q.votes + 1});
+    }
+
+    downvote(template, bag, q) {
+        let question:FirebaseListObservable<any> = this.af.database.list('/reference/' + template + '/questions/' + bag);
+        if (bag === "userSubmitted" && q.votes < -4) {
+            question.remove(q.$key)
+        } else {
+            question.update(q.$key, {votes: q.votes - 1});
+        }
     }
     
     initList() {
         this.route.queryParams.subscribe(queryParams => {
+            this.currentTemplate = queryParams['template'];
             this.currentQuestionObservable = this.af.database.list('reference/' + 
                         queryParams['template'] + '/questions/' + queryParams['bag']);
             this.currentQuestionObservable.subscribe(questions => {
                 this.currentQuestionList = questions.concat([]);
             });
-        })
+            this.bagObjectObservable = this.af.database.object('reference/' + 
+                        queryParams['template'] + '/questions/userSubmitted');
+            this.bagObjectObservable.subscribe(bag => {
+                this.userSubmitted = bag;
+            });
+            this.isUserSubmitted = (queryParams['bag'] === "userSubmitted") ? true : false;
+        });
     }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd, Route } from '@angular/router';
 
 @Component({
     selector: 'app-qasession',
@@ -20,7 +20,7 @@ export class QASessionComponent implements OnInit, OnDestroy {
     urlString: string;
     createdKey: string;
 
-    constructor(public af: AngularFire, public route: ActivatedRoute) {
+    constructor(public af: AngularFire, public route: ActivatedRoute, public router: Router) {
     }
 
     ngOnInit() {
@@ -85,5 +85,9 @@ export class QASessionComponent implements OnInit, OnDestroy {
         // erase area and refocus
         this.textArea = '';
         document.getElementById('answer').focus();
+    }
+
+    exitSession() {
+         this.router.navigate(['welcome'])
     }
 }

@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 // AngularFire
-import { AngularFireModule } from 'angularfire2';
+import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
 // bootstrap
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -23,7 +23,8 @@ import { QASessionComponent } from './qasession/qasession.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ReaderComponent } from './reader/reader.component';
 import { RecreatorComponent } from './app.component';
-import { QuestionVotingComponent } from './question-voting/question-voting.component'
+import { QuestionVotingComponent } from './question-voting/question-voting.component';
+import { MySessionsComponent } from './my-sessions/my-sessions.component'
 
 export const firebaseConfig = {
     apiKey: "AIzaSyAhK6cZF-p6UW8OI0saGRPxEJ1YvIkv8jI",
@@ -43,7 +44,8 @@ export const firebaseConfig = {
     SidebarComponent,
     ReaderComponent,
     RecreatorComponent,
-    QuestionVotingComponent
+    QuestionVotingComponent,
+    MySessionsComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +61,7 @@ export const firebaseConfig = {
       { path: 'reader', component: ReaderComponent },
       { path: 'recreator', component: RecreatorComponent },
       { path: 'questionVoting', component: QuestionVotingComponent },
+      { path: 'mySessions', component: MySessionsComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
       { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
     ])
