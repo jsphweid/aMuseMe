@@ -20,6 +20,7 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ## TODO
 
  - add more questions
+ - use async pipe to write less code 
  - buttons for saving as text / json / word (or some formatted), markdown, whatever
  - user submitted questions to reference and upvoting mechanism...
  - setTimeout to stash changes frequenty (not just onDestroy)
