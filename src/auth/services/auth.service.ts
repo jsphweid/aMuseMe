@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFire, AngularFireAuth, AuthProviders, AuthMethods } from 'angularfire2';
 
 @Injectable()
-export class LoginService {
+export class AuthService {
     user: {} = {};
     constructor(public af: AngularFire) {
         this.af.auth.subscribe(user => {
@@ -30,6 +30,7 @@ export class LoginService {
             provider: AuthProviders.Anonymous,
             method: AuthMethods.Anonymous,
         });
+        console.log('ttt')
     }
 
 

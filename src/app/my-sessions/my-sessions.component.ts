@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AngularFire, AuthProviders } from 'angularfire2';
-import { LoginService } from '../login.service';
+import { AuthService } from '../../auth/services/auth.service';
 
 @Component({
     selector: 'app-my-session',
@@ -10,7 +10,7 @@ import { LoginService } from '../login.service';
 export class MySessionsComponent {
     name: string;
 
-    constructor(public af: AngularFire, public loginService: LoginService) {
+    constructor(public af: AngularFire, public loginService: AuthService) {
     }
 
     login() {

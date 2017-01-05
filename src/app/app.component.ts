@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { LoginService } from './login.service';
-
 
 @Component({
     selector: 'app-root',
@@ -9,14 +7,7 @@ import { LoginService } from './login.service';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    constructor(public loginService: LoginService) {}
-
-    googleLogin() {
-        this.loginService.login();
-    }
-    anonymousLogin() {
-        this.loginService.loginAnonymous();
-    }
+    constructor() {}
 }
 
 //////////////////////////////////////////////////////////////////////

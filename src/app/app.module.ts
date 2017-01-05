@@ -17,7 +17,9 @@ import { ModalModule } from 'ng2-modal'
 import { DropdownModule } from "ng2-dropdown";
 
 // Login Service
-import { LoginService } from './login.service'
+import { AuthService } from '../auth/services/auth.service';
+import { LogInOutComponent } from '../auth/components/log-in-out/log-in-out.component'
+
 
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -27,7 +29,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { ReaderComponent } from './reader/reader.component';
 import { RecreatorComponent } from './app.component';
 import { QuestionVotingComponent } from './question-voting/question-voting.component';
-import { MySessionsComponent } from './my-sessions/my-sessions.component'
+import { MySessionsComponent } from './my-sessions/my-sessions.component';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyAhK6cZF-p6UW8OI0saGRPxEJ1YvIkv8jI",
@@ -53,7 +55,8 @@ const myFirebaseAuthConfig = {
         ReaderComponent,
         RecreatorComponent,
         QuestionVotingComponent,
-        MySessionsComponent
+        MySessionsComponent,
+        LogInOutComponent
     ],
     imports: [
         BrowserModule,
@@ -74,7 +77,7 @@ const myFirebaseAuthConfig = {
             { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
         ])
     ],
-    providers: [LoginService],
+    providers: [AuthService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

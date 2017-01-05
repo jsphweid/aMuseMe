@@ -1,0 +1,5 @@
+<div class="row header">
+  Logged in as: {{ authService?.user?.auth?.displayName || (authService?.user?.anonymous && "Anonymous") || "ERROR"}}
+  <button (click)="googleLogin()">Login with Google</button>
+  <button (click)="anonymousLogin()">Logout</button>
+</div>
