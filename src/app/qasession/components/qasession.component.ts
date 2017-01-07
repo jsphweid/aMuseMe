@@ -17,6 +17,7 @@ export class QASessionComponent implements OnInit, OnDestroy {
     templateType: string;
     textArea: string = '';
     qaData: qaObject[];
+    titleValue: string = "";
 
     constructor(public route: ActivatedRoute, public router: Router, public qaService: QasessionService) {
     }
@@ -29,11 +30,11 @@ export class QASessionComponent implements OnInit, OnDestroy {
 
 
     ngOnDestroy() {
-        this.qaService.stash(this.textArea);
+        this.qaService.stash(this.textArea, this.titleValue);
     }
 
     next() {
-        this.qaData = this.qaService.questionSubmit(this.textArea);
+        this.qaData = this.qaService.questionSubmit(this.textArea, this.titleValue);
         // erase area and refocus
         this.textArea = '';
         document.getElementById('answer').focus();

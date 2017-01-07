@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { AngularFire, AuthProviders } from 'angularfire2';
+import { AngularFire, AuthProviders, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2';
 import { AuthService } from '../../auth/services/auth.service';
+import { qaObject } from '../shared/interfaces';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-my-session',
@@ -8,24 +10,42 @@ import { AuthService } from '../../auth/services/auth.service';
     styleUrls: ['./my-sessions.component.css']
 })
 export class MySessionsComponent {
-    name: string;
+    
+    sessions$: FirebaseListObservable<any>;
+    sessions: any[];
+    selectedSession$: FirebaseObjectObservable<any[]>;
+    selectedSession: any;
+    selectedSessionKey: string;
+    titleValue: string;
 
-    constructor(public af: AngularFire, public loginService: AuthService) {
+    userPath: string;
+    qaData: qaObject[];
+
+    constructor(public af: AngularFire, public auth: AuthService, public router: Router) {
+        this.userPath = '/sessions/' + auth.id;
+        this.sessions$ = af.database.list(this.userPath);
+        this.sessions$.subscribe(sessions => {
+            this.sessions = sessions.concat([]).sort((a,b) => b.createTime - a.createTime)
+        });
     }
 
-    login() {
-        this.loginService.login();
+    openReader(key) {
+        window.scrollTo(0, 0); // make sure it is at the top every time
+        this.selectedSession$ = this.af.database.object(this.userPath + '/' + key);
+        this.selectedSession$.subscribe(session => {
+            this.selectedSession = session;
+        });
+        this.qaData = this.selectedSession.data;
+        this.titleValue = this.selectedSession.title;
+        this.selectedSessionKey = key;
     }
 
-    logout() {
-        this.loginService.logout();
+    deleteSession(key) {
+        const sessToDelete$ = this.af.database.list(this.userPath);
+        sessToDelete$.remove(key);
     }
 
-    loginAnonymously() {
-        this.loginService.loginAnonymous();
-    }
-
-    test() {
-        console.log(this.loginService.user);
+    openEditor(key) {
+        // this.router.navigate(['qasession'], {queryParams : {template: this.templateName}})
     }
 }

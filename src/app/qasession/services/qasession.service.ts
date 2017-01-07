@@ -34,7 +34,7 @@ export class QasessionService {
         this.template = template;
         this.currentQuestionIndex = 0;
         this.sessions$.push({
-            createTime: new Date().getTime(),
+            createTime: new Date().getTime() / 1000,
             templateType: template
         }).then(item => { // get key
             this.sessionKey = item.key;
@@ -46,8 +46,9 @@ export class QasessionService {
     useExistingSession() {
     }
 
-    stash(text: string) {
+    stash(text: string, titleInc: string) {
         this.session$.update({
+            title: titleInc,
             stash: {
                 textArea: text.replace(/(?:\r\n|\r|\n)/g, '<br />'),
                 currentQuestionIndex: this.currentQuestionIndex
@@ -55,20 +56,22 @@ export class QasessionService {
         });
     }
 
-    questionSubmit(text: string): qaObject[] {
+    questionSubmit(text: string, titleInc: string): qaObject[] {
         if (!this.session.data) this.session.data = [];
         this.session.data.push({
             question: this.reference[this.template].questions[this.currentBag][this.currentQuestionIndex].question,
             answer: text.replace(/(?:\r\n|\r|\n)/g, '<br />')
         })
-        this.session$.update({ data: this.session.data });
+        this.session$.update({
+            data: this.session.data,
+            title: titleInc
+        });
         this.currentQuestionIndex++;
         return this.session.data;
     }
 
     deleteSession() {
         const sessToDelete$ = this.af.database.list(this.userPath);
-        console.log('removing at: ' + this.sessionKey);
         sessToDelete$.remove(this.sessionKey);
     }
 }

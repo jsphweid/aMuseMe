@@ -13,10 +13,10 @@ export class ReaderComponent {
 
     // simply displays an array of question and answers
 
-    constructor() { }
+    constructor() {}
 
     @Input() data: qaObject[];
-    @Input() data2: string;
+    @Input() title: string;
 
     SelectText() {
         var el = <HTMLElement>document.getElementById('allQA'),

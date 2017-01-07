@@ -15,6 +15,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalModule } from 'ng2-modal'
 // DropdownModule
 import { DropdownModule } from "ng2-dropdown";
+// moment
+import { MomentModule } from "angular2-moment"; // amTimeAgo, but where the hell does that get introduced????
+
 
 // Login Service
 import { AuthService } from '../auth/services/auth.service';
@@ -72,6 +75,7 @@ const myFirebaseAuthConfig = {
         HttpModule,
         ModalModule,
         DropdownModule,
+        MomentModule,
         AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
         FormsModule,
         RouterModule.forRoot([

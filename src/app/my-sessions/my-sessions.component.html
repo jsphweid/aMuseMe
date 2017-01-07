@@ -1,20 +1,31 @@
-<div> {{ (af.auth | async)?.uid }} </div>
-<div>
-    <p>
-        Logged in as: {{ loginService?.user?.auth?.displayName || "Anonymous"}}
-    </p>    
+<div class="container-fluid">
+    <div class="row">
+        
+        <!--sessions-->
+        <div class="col-md-6">
+            <table style="width: 100%">
+                <tr>    
+                    <th style="width: 80%">Click to QuickView</th>
+                    <th style="width: 10%"></th>
+                    <th style="width: 10%"></th>
+                </tr>
+                <tr class="sessionClass" *ngFor="let session of sessions" [class.highlighted]="session.$key === selectedSessionKey">
+                    <td style="width: 80%" (click)="openReader(session.$key, $event)" title="Open in Editor">
+                        {{ session.title || "Untitled"}} -- Created {{ session.createTime * 1000 | amTimeAgo }}
+                    </td>
+                    <td style="width:10%">
+                        <button (click)="deleteSession(session.$key)" class="btn btn-default" title="Permanently Delete"><span class="glyphicon glyphicon-trash"></span></button>
+                    </td>
+                    <td style="width: 10%">
+                        <button (click)="openEditor(session.$key)" class="btn btn-default" title="Open in Editor"><span class="glyphicon glyphicon-edit"></span></button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!--reader-->
+        <div class="col-md-6">
+            <app-reader [data]="qaData" [title]="titleValue"></app-reader>
+        </div>
+    </div>
 </div>
-<button md-raised-button (click)="login()">
-  Use My Google Account
-</button>
-<button md-raised-button (click)="logout()">
-  Logout
-</button>
-
-<button (click)="test()">
-test  
-</button>
-
-<button (click)="loginAnonymously()">
-     login anonymously    
-</button>

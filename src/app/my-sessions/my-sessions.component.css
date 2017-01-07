@@ -1,0 +1,11 @@
+.sessionClass:hover {
+    background-color: #f5f5f5;
+}
+
+.highlighted {
+    background-color: #ddd
+}
+
+th, td {
+    padding: 5px;
+}
