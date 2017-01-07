@@ -20,16 +20,23 @@ import { DropdownModule } from "ng2-dropdown";
 import { AuthService } from '../auth/services/auth.service';
 import { LogInOutComponent } from '../auth/components/log-in-out/log-in-out.component'
 
+// pipes
+import { ReversePipe } from './shared/pipes';
 
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { ProjectTemplatesComponent } from './project-templates/project-templates.component';
-import { QASessionComponent } from './qasession/qasession.component';
+import { QASessionComponent } from './qasession/components/qasession.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { ReaderComponent } from './reader/reader.component';
+import { ReaderComponent } from './shared/reader/reader.component';
 import { RecreatorComponent } from './app.component';
 import { QuestionVotingComponent } from './question-voting/question-voting.component';
 import { MySessionsComponent } from './my-sessions/my-sessions.component';
+import { NotAuthenticatedComponent } from './errors.component';
+
+import { AuthGuard } from '../auth/guards/auth-guard';
+import { UnauthGuard } from '../auth/guards/unauth-guard';
+
+import { QasessionService } from './qasession/services/qasession.service';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyAhK6cZF-p6UW8OI0saGRPxEJ1YvIkv8jI",
@@ -49,14 +56,15 @@ const myFirebaseAuthConfig = {
     declarations: [
         AppComponent,
         WelcomeComponent,
-        ProjectTemplatesComponent,
         QASessionComponent,
         SidebarComponent,
         ReaderComponent,
         RecreatorComponent,
         QuestionVotingComponent,
         MySessionsComponent,
-        LogInOutComponent
+        LogInOutComponent,
+        NotAuthenticatedComponent,
+        ReversePipe
     ],
     imports: [
         BrowserModule,
@@ -68,16 +76,21 @@ const myFirebaseAuthConfig = {
         FormsModule,
         RouterModule.forRoot([
             { path: 'welcome', component: WelcomeComponent },
-            { path: 'qasession', component: QASessionComponent },
-            { path: 'reader', component: ReaderComponent },
+            { path: 'qasession', component: QASessionComponent, canActivate: [AuthGuard] },
             { path: 'recreator', component: RecreatorComponent },
-            { path: 'questionVoting', component: QuestionVotingComponent },
-            { path: 'mySessions', component: MySessionsComponent },
+            { path: 'questionVoting', component: QuestionVotingComponent, canActivate: [AuthGuard] },
+            { path: 'mySessions', component: MySessionsComponent, canActivate: [AuthGuard] },
+            { path: 'notAuthenticated', component: NotAuthenticatedComponent },
             { path: '', redirectTo: 'welcome', pathMatch: 'full' },
             { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
         ])
     ],
-    providers: [AuthService],
+    providers: [
+        AuthService,
+        QasessionService,
+        AuthGuard,
+        UnauthGuard
+        ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

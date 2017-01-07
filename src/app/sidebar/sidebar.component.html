@@ -7,12 +7,11 @@
             <div class="container-fluid">
                 <div class="row">Select QA Template</div>
                 <div class="row">
-                    <app-project-templates></app-project-templates>
+                    <button class="templateButton" (click)="router.navigate(['recreator'], {queryParams : {template: 'song' }})">Song</button>
+                    <button class="templateButton" (click)="router.navigate(['recreator'], {queryParams : {template: 'story'}})">Story</button>
+                    <button class="templateButton" (click)="removeSessionsData()">X.X</button>
                 </div>
             </div>
-        </li>
-        <li>
-            <a [routerLink]="['/reader']">Reader</a>
         </li>
         <li>
             <a [routerLink]="['/questionVoting']">Questions</a>

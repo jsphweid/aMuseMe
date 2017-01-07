@@ -1,0 +1,24 @@
+<div *ngIf="data" class="panel panel-default">
+    <!--heading-->
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Reader</h4>
+            </div>
+            <div class="col-md-6">
+                <div style="float: right">
+                    <button class="btn btn-default" (click)="SelectText()">Select</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--body-->
+    <div id="allQA">
+        <div class="panel-body" *ngFor="let qa of data | reverse">
+            <b class="question">{{ qa?.question }}</b>
+            <div [innerHTML]="qa?.answer"></div>
+        </div>
+    </div>
+</div>

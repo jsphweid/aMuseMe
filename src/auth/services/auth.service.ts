@@ -1,36 +1,46 @@
 import { Injectable } from '@angular/core';
-import { AngularFire, AngularFireAuth, AuthProviders, AuthMethods } from 'angularfire2';
+import { AngularFireAuth, AuthProviders, AuthMethods, FirebaseAuth, FirebaseAuthState, AngularFire } from 'angularfire2';
 
 @Injectable()
 export class AuthService {
     user: {} = {};
-    constructor(public af: AngularFire) {
+    private authState: FirebaseAuthState = null;
+
+    constructor (public auth$: FirebaseAuth, public af: AngularFire) {
+        auth$.subscribe((state: FirebaseAuthState) => {
+            this.authState = state;
+        });
         this.af.auth.subscribe(user => {
-            if (user) { // user logged in
-                this.user = user;
-            }
-            else { // user not logged in
-                this.user = {};
-            }
+            this.user = user ? user : {};
         });
     }
 
-    login() {
-        this.af.auth.login({
+    get authenticated(): boolean {
+        return this.authState !== null;
+    }
+
+    get id(): string {
+        return this.authenticated ? this.authState.uid : '';
+    }
+
+    login(): firebase.Promise<FirebaseAuthState> {
+        return this.auth$.login({
             provider: AuthProviders.Google
         });
+        // this.af.auth.login({ // old way
+        //     provider: AuthProviders.Google
+        // });
     }
 
     logout() {
-        this.af.auth.logout();
+        this.auth$.logout();
     }
 
     loginAnonymous() {
-        this.af.auth.login({
+        this.auth$.login({
             provider: AuthProviders.Anonymous,
             method: AuthMethods.Anonymous,
         });
-        console.log('ttt')
     }
 
 
