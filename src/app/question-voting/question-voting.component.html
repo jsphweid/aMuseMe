@@ -15,7 +15,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="dropdown" dropdown [dropdownToggle]="false" (onClose)="templateChosen()">
-                                    <button class="btn select" dropdown-open>{{ (route?.snapshot?.queryParams['template'] || 'Choose') | uppercase}}</button>
+                                    <button class="btn btn-default select" dropdown-open>{{ (route?.snapshot?.queryParams['template'] || 'Choose') | uppercase}}</button>
                                     <ul class="dropdown-menu">
                                         <li *ngFor="let template of templates">
                                             <a (click)="router.navigate(['questionVoting'], {queryParams : {template: template.$key, bag: 'choose' }})">{{ template.$key | uppercase }}</a>
@@ -26,7 +26,7 @@
 
                             <div class="col-md-6">
                                 <div class="dropdown" dropdown [dropdownToggle]="false" (onClose)="initList()">
-                                    <button class="btn select" dropdown-open>{{ route?.snapshot?.queryParams['bag'] | uppercase }}</button>
+                                    <button class="btn btn-default select" dropdown-open>{{ route?.snapshot?.queryParams['bag'] | uppercase }}</button>
                                     <ul class="dropdown-menu">
                                         <li *ngFor="let bagName of questionBags">
                                             <a (click)="router.navigate(['questionVoting'], {queryParams : {template: route?.snapshot?.queryParams['template'], bag: bagName.$key }})">{{ bagName.$key | uppercase }}</a>
@@ -72,7 +72,7 @@
 
                     <div class="dropdown" dropdown [dropdownToggle]="false">
                         <span>Sort: </span>
-                        <button class="btn select" dropdown-open>{{ currentSortMethod }}</button>
+                        <button class="btn btn-default select" dropdown-open>{{ currentSortMethod }}</button>
                         <ul class="dropdown-menu">
                             <li><a (click)="changeSort('mostVotes')">most votes</a></li>
                             <li><a (click)="changeSort('leastVotes')">least votes</a></li>
