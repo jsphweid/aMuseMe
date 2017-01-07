@@ -27,9 +27,6 @@ export class AuthService {
         return this.auth$.login({
             provider: AuthProviders.Google
         });
-        // this.af.auth.login({ // old way
-        //     provider: AuthProviders.Google
-        // });
     }
 
     logout() {

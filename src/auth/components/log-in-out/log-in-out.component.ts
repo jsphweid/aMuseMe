@@ -12,10 +12,5 @@ export class LogInOutComponent implements OnInit {
 
   ngOnInit() {
   }
-  googleLogin() {
-    this.authService.login();
-  }
-  anonymousLogin() {
-    this.authService.loginAnonymous();
-  }
+
 }

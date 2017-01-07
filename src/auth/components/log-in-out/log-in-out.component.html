@@ -1,5 +1,7 @@
 <div class="row header">
-  Logged in as: {{ authService?.user?.auth?.displayName || (authService?.user?.anonymous && "Anonymous") || "ERROR"}}
-  <button class="btn btn-default" (click)="googleLogin()">Login with Google</button>
-  <button class="btn btn-default" (click)="anonymousLogin()">Logout</button>
+ <span *ngIf="authService?.user?.auth?.displayName || authService?.user?.anonymous">
+   Logged in as: {{ authService?.user?.auth?.displayName || (authService?.user?.anonymous && "Anonymous") }}</span>
+  <button class="btn btn-default" (click)="authService.login()">Login with Google</button>
+  <button class="btn btn-default" (click)="authService.loginAnonymous()">Login Anonymously</button>
+  <button class="btn btn-default" (click)="authService.logout()">Logout</button>
 </div>
