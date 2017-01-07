@@ -28,6 +28,8 @@ export class QuestionVotingComponent implements OnInit {
     isUserSubmitted: boolean;
     questionBags: any;
 
+    currentSortMethod: string = "most votes";
+
     constructor(public af: AngularFire, public route: ActivatedRoute, public router: Router) {
         this.questionsObservable = af.database.list('/reference');
         this.questionsObservable.subscribe(templates => {
@@ -79,7 +81,7 @@ export class QuestionVotingComponent implements OnInit {
             this.currentQuestionObservable = this.af.database.list('reference/' + 
                         queryParams['template'] + '/questions/' + queryParams['bag']);
             this.currentQuestionObservable.subscribe(questions => {
-                this.currentQuestionList = questions.concat([]);
+                this.currentQuestionList = questions.concat([]).sort((a,b) => b.votes - a.votes);
             });
             this.bagObjectObservable = this.af.database.object('reference/' + 
                         queryParams['template'] + '/questions/userSubmitted');
@@ -88,5 +90,26 @@ export class QuestionVotingComponent implements OnInit {
             });
             this.isUserSubmitted = (queryParams['bag'] === "userSubmitted") ? true : false;
         });
+    }
+
+    changeSort(sortMethod) {
+
+        this.currentQuestionObservable.subscribe(questions => {
+
+            switch(sortMethod) {
+                case "mostVotes":
+                    this.currentQuestionList = questions.concat([]).sort((a,b) => b.votes - a.votes);
+                    this.currentSortMethod = "most votes";
+                    break;
+                case "leastVotes":
+                    this.currentQuestionList = questions.concat([]).sort((a,b) => a.votes - b.votes);
+                    this.currentSortMethod = "least votes";
+                    break;
+                case "freshest":
+                    this.currentQuestionList = questions.concat([]).slice().reverse();
+                    this.currentSortMethod = "freshest";
+                    break;            
+            }
+        });        
     }
 }
