@@ -8,6 +8,7 @@ export class QasessionService {
 
     userPath: string;
     sessions$: FirebaseListObservable<any>;
+    abort: boolean = false;
 
     reference$: FirebaseObjectObservable<any>;
     reference: any;
@@ -43,7 +44,17 @@ export class QasessionService {
         });
     }
 
-    useExistingSession() {
+    useExistingSession(key, callback) {
+        this.session$ = this.af.database.object(this.userPath + '/' + key);
+        this.session$.subscribe(session => { // why is this beingcalled after deleteSession()
+            if (!this.abort) { // abort workaround
+                this.session = session;
+                this.template = session.templateType;
+                this.currentBag = session.stash.currentBag;
+                this.currentQuestionIndex = session.stash.currentQuestionIndex;
+                callback(this.session.stash.textArea, this.session.title, this.session.data)
+            }
+        });
     }
 
     stash(text: string, titleInc: string) {
@@ -51,7 +62,8 @@ export class QasessionService {
             title: titleInc,
             stash: {
                 textArea: text.replace(/(?:\r\n|\r|\n)/g, '<br />'),
-                currentQuestionIndex: this.currentQuestionIndex
+                currentQuestionIndex: this.currentQuestionIndex,
+                currentBag: this.currentBag
             }
         });
     }
@@ -71,7 +83,9 @@ export class QasessionService {
     }
 
     deleteSession() {
+        this.abort = true;
         const sessToDelete$ = this.af.database.list(this.userPath);
         sessToDelete$.remove(this.sessionKey);
+        
     }
 }

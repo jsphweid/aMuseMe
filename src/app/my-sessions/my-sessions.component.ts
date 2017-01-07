@@ -46,6 +46,6 @@ export class MySessionsComponent {
     }
 
     openEditor(key) {
-        // this.router.navigate(['qasession'], {queryParams : {template: this.templateName}})
+        this.router.navigate(['qasession'], {queryParams : {sessionKey: key}})
     }
 }

@@ -18,6 +18,7 @@ export class QASessionComponent implements OnInit, OnDestroy {
     textArea: string = '';
     qaData: qaObject[];
     titleValue: string = "";
+    stashIt: boolean = true;
 
     constructor(public route: ActivatedRoute, public router: Router, public qaService: QasessionService) {
     }
@@ -25,12 +26,20 @@ export class QASessionComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.sessionKey = this.route.snapshot.queryParams['sessionKey'];
         this.templateType = this.route.snapshot.queryParams['template'];
-        this.sessionKey ? this.qaService.useExistingSession() : this.qaService.createNewSession(this.templateType);
+        if (this.sessionKey) {
+            this.qaService.useExistingSession(this.sessionKey, (textArea, titleValue, data) => {
+                this.textArea = textArea;
+                this.titleValue = titleValue;
+                this.qaData = data;
+            });
+        } else { 
+            this.qaService.createNewSession(this.templateType);
+        }
     }
 
 
     ngOnDestroy() {
-        this.qaService.stash(this.textArea, this.titleValue);
+        if (this.stashIt) this.qaService.stash(this.textArea, this.titleValue);
     }
 
     next() {
@@ -41,11 +50,12 @@ export class QASessionComponent implements OnInit, OnDestroy {
     }
 
     deleteSession() {
+        this.stashIt = false;
         this.exitSession();
         this.qaService.deleteSession();
     }
 
     exitSession() {
-         this.router.navigate(['welcome'])
+        this.router.navigate(['welcome']);
     }
 }

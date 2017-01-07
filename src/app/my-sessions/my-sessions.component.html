@@ -5,7 +5,7 @@
         <div class="col-md-6">
             <table style="width: 100%">
                 <tr>    
-                    <th style="width: 80%">Click to QuickView</th>
+                    <th style="width: 80%">All of your sessions:</th>
                     <th style="width: 10%"></th>
                     <th style="width: 10%"></th>
                 </tr>
@@ -13,11 +13,11 @@
                     <td style="width: 80%" (click)="openReader(session.$key, $event)" title="Open in Editor">
                         {{ session.title || "Untitled"}} -- Created {{ session.createTime * 1000 | amTimeAgo }}
                     </td>
-                    <td style="width:10%">
-                        <button (click)="deleteSession(session.$key)" class="btn btn-default" title="Permanently Delete"><span class="glyphicon glyphicon-trash"></span></button>
-                    </td>
                     <td style="width: 10%">
                         <button (click)="openEditor(session.$key)" class="btn btn-default" title="Open in Editor"><span class="glyphicon glyphicon-edit"></span></button>
+                    </td>                    
+                    <td style="width:10%">
+                        <button (click)="deleteSession(session.$key)" class="btn btn-default" title="Permanently Delete"><span class="glyphicon glyphicon-trash"></span></button>
                     </td>
                 </tr>
             </table>

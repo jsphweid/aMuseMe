@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-4">
-                    <h4 style="text-transform: uppercase;">New {{route?.snapshot?.queryParams['template']}} session</h4>
+                    <h4 style="text-transform: uppercase;">{{route?.snapshot?.queryParams['template']}} session</h4>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
@@ -22,8 +22,7 @@
 
     <div class="panel-body">
         <div>
-
-            <div *ngIf="qaService.currentQuestionIndex != qaService?.reference[qaService.template]?.questions[qaService.currentBag].length">
+            <div *ngIf="qaService.currentQuestionIndex != qaService?.reference[qaService.template]?.questions[qaService.currentBag]?.length">
                
                 <!-- question header -->
                 <div>
