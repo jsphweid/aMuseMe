@@ -58,8 +58,8 @@
                 <table>
                     <tr *ngFor="let q of currentQuestionList">
                         <td>{{ q.votes }}</td>
-                        <td><button (click)="upvote(route?.snapshot?.queryParams['template'], route?.snapshot?.queryParams['bag'], q)"><span class="glyphicon glyphicon-thumbs-up"></span></button></td>
-                        <td><button (click)="downvote(route?.snapshot?.queryParams['template'], route?.snapshot?.queryParams['bag'], q)"><span class="glyphicon glyphicon-thumbs-down"></span></button></td>
+                        <td><button class="btn btn-default" (click)="upvote(route?.snapshot?.queryParams['template'], route?.snapshot?.queryParams['bag'], q)"><span class="glyphicon glyphicon-thumbs-up"></span></button></td>
+                        <td><button class="btn btn-default" (click)="downvote(route?.snapshot?.queryParams['template'], route?.snapshot?.queryParams['bag'], q)"><span class="glyphicon glyphicon-thumbs-down"></span></button></td>
                         <td>{{ q.question }}</td>
                     </tr>
                 </table>
