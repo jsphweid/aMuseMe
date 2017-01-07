@@ -39,6 +39,11 @@ export class QASessionComponent implements OnInit, OnDestroy {
         document.getElementById('answer').focus();
     }
 
+    deleteSession() {
+        this.exitSession();
+        this.qaService.deleteSession();
+    }
+
     exitSession() {
          this.router.navigate(['welcome'])
     }

@@ -14,6 +14,7 @@ export class QasessionService {
 
     session$: FirebaseObjectObservable<any>;
     session: any;
+    sessionKey: string;
     template: string;
 
     // defaults
@@ -36,6 +37,7 @@ export class QasessionService {
             createTime: new Date().getTime(),
             templateType: template
         }).then(item => { // get key
+            this.sessionKey = item.key;
             this.session$ = this.af.database.object(this.userPath + '/' + item.key); // update observable
             this.session$.subscribe(session => this.session = session); // could this go in the constructor?
         });
@@ -62,5 +64,11 @@ export class QasessionService {
         this.session$.update({ data: this.session.data });
         this.currentQuestionIndex++;
         return this.session.data;
+    }
+
+    deleteSession() {
+        const sessToDelete$ = this.af.database.list(this.userPath);
+        console.log('removing at: ' + this.sessionKey);
+        sessToDelete$.remove(this.sessionKey);
     }
 }
