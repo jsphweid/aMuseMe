@@ -11,6 +11,8 @@ export class QasessionService {
     abort: boolean = false;
 
     reference$: FirebaseObjectObservable<any>;
+    bagList$: FirebaseListObservable<any[]>;
+    bagList: any[];
     reference: any;
 
     session$: FirebaseObjectObservable<any>;
@@ -26,9 +28,14 @@ export class QasessionService {
         this.userPath = '/sessions/' + auth.id;
         this.sessions$ = af.database.list(this.userPath);
         this.reference$ = af.database.object('/reference');
-        this.reference = this.reference$.subscribe(ref => {
+        this.reference$.subscribe(ref => {
             this.reference = ref;
         });
+    }
+
+    connectBagList(template, bag) {
+        this.bagList$ = this.af.database.list('/reference/' + template + '/questions/' + bag);
+        this.bagList$.subscribe(bagInc => this.bagList = bagInc.concat([]));
     }
 
     createNewSession(template) {
@@ -42,6 +49,7 @@ export class QasessionService {
             this.session$ = this.af.database.object(this.userPath + '/' + item.key); // update observable
             this.session$.subscribe(session => this.session = session); // could this go in the constructor?
         });
+        this.connectBagList(template, this.currentBag);
     }
 
     useExistingSession(key, callback) {
@@ -52,6 +60,7 @@ export class QasessionService {
                 this.template = session.templateType;
                 this.currentBag = session.stash.currentBag;
                 this.currentQuestionIndex = session.stash.currentQuestionIndex;
+                this.connectBagList(session.templateType, session.stash.currentBag);
                 callback(this.session.stash.textArea, this.session.title, this.session.data)
             }
         });
@@ -71,7 +80,7 @@ export class QasessionService {
     questionSubmit(text: string, titleInc: string): qaObject[] {
         if (!this.session.data) this.session.data = [];
         this.session.data.push({
-            question: this.reference[this.template].questions[this.currentBag][this.currentQuestionIndex].question,
+            question: this.bagList[this.currentQuestionIndex].question,
             answer: text.replace(/(?:\r\n|\r|\n)/g, '<br />')
         })
         this.session$.update({

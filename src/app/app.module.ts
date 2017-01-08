@@ -35,6 +35,7 @@ import { RecreatorComponent } from './app.component';
 import { QuestionVotingComponent } from './question-voting/question-voting.component';
 import { MySessionsComponent } from './my-sessions/my-sessions.component';
 import { NotAuthenticatedComponent } from './errors.component';
+import { RebuildQuestionsComponent } from './rebuild/rebuild-questions/rebuild-questions.component';
 
 import { AuthGuard } from '../auth/guards/auth-guard';
 import { UnauthGuard } from '../auth/guards/unauth-guard';
@@ -67,7 +68,8 @@ const myFirebaseAuthConfig = {
         MySessionsComponent,
         LogInOutComponent,
         NotAuthenticatedComponent,
-        ReversePipe
+        ReversePipe,
+        RebuildQuestionsComponent
     ],
     imports: [
         BrowserModule,
@@ -85,6 +87,7 @@ const myFirebaseAuthConfig = {
             { path: 'questionVoting', component: QuestionVotingComponent, canActivate: [AuthGuard] },
             { path: 'mySessions', component: MySessionsComponent, canActivate: [AuthGuard] },
             { path: 'notAuthenticated', component: NotAuthenticatedComponent },
+            { path: 'rebuildQuestions', component: RebuildQuestionsComponent },
             { path: '', redirectTo: 'welcome', pathMatch: 'full' },
             { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
         ])

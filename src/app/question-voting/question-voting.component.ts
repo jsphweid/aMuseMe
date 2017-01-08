@@ -62,29 +62,29 @@ export class QuestionVotingComponent implements OnInit {
     }
 
     upvote(template, bag, q) {
-        let question:FirebaseListObservable<any> = this.af.database.list('/reference/' + template + '/questions/' + bag);
-        question.update(q.$key, {votes: q.votes + 1});
+        let question: FirebaseListObservable<any> = this.af.database.list('/reference/' + template + '/questions/' + bag);
+        question.update(q.$key, { votes: q.votes + 1 });
     }
 
     downvote(template, bag, q) {
-        let question:FirebaseListObservable<any> = this.af.database.list('/reference/' + template + '/questions/' + bag);
+        let question: FirebaseListObservable<any> = this.af.database.list('/reference/' + template + '/questions/' + bag);
         if (bag === "userSubmitted" && q.votes < -4) {
             question.remove(q.$key)
         } else {
-            question.update(q.$key, {votes: q.votes - 1});
+            question.update(q.$key, { votes: q.votes - 1 });
         }
     }
-    
+
     initList() {
         this.route.queryParams.subscribe(queryParams => {
             this.currentTemplate = queryParams['template'];
-            this.currentQuestionObservable = this.af.database.list('reference/' + 
-                        queryParams['template'] + '/questions/' + queryParams['bag']);
+            this.currentQuestionObservable = this.af.database.list('reference/' +
+                queryParams['template'] + '/questions/' + queryParams['bag']);
             this.currentQuestionObservable.subscribe(questions => {
-                this.currentQuestionList = questions.concat([]).sort((a,b) => b.votes - a.votes);
+                this.currentQuestionList = questions.concat([]).sort((a, b) => b.votes - a.votes);
             });
-            this.bagObjectObservable = this.af.database.object('reference/' + 
-                        queryParams['template'] + '/questions/userSubmitted');
+            this.bagObjectObservable = this.af.database.object('reference/' +
+                queryParams['template'] + '/questions/userSubmitted');
             this.bagObjectObservable.subscribe(bag => {
                 this.userSubmitted = bag;
             });
@@ -96,20 +96,20 @@ export class QuestionVotingComponent implements OnInit {
 
         this.currentQuestionObservable.subscribe(questions => {
 
-            switch(sortMethod) {
+            switch (sortMethod) {
                 case "mostVotes":
-                    this.currentQuestionList = questions.concat([]).sort((a,b) => b.votes - a.votes);
+                    this.currentQuestionList = questions.concat([]).sort((a, b) => b.votes - a.votes);
                     this.currentSortMethod = "most votes";
                     break;
                 case "leastVotes":
-                    this.currentQuestionList = questions.concat([]).sort((a,b) => a.votes - b.votes);
+                    this.currentQuestionList = questions.concat([]).sort((a, b) => a.votes - b.votes);
                     this.currentSortMethod = "least votes";
                     break;
                 case "freshest":
                     this.currentQuestionList = questions.concat([]).slice().reverse();
                     this.currentSortMethod = "freshest";
-                    break;            
+                    break;
             }
-        });        
+        });
     }
 }

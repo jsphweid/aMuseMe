@@ -22,11 +22,11 @@
 
     <div class="panel-body">
         <div>
-            <div *ngIf="qaService.currentQuestionIndex != qaService?.reference[qaService.template]?.questions[qaService.currentBag]?.length">
+            <div *ngIf="qaService?.bagList">
                
                 <!-- question header -->
                 <div>
-                    <h1>{{ qaService.reference[qaService.template]?.questions[qaService.currentBag][qaService.currentQuestionIndex]?.question }}</h1>
+                    <h1>{{ qaService?.bagList[qaService?.currentQuestionIndex]?.question }}</h1>
                 </div>
                
                 <!-- answer input -->

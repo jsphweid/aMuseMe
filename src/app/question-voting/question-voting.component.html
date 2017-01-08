@@ -15,10 +15,10 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="dropdown" dropdown [dropdownToggle]="false" (onClose)="templateChosen()">
-                                    <button class="btn btn-default select" dropdown-open>{{ (route?.snapshot?.queryParams['template'] || 'Choose') | uppercase}}</button>
+                                    <button class="btn btn-default select" dropdown-open>{{ (route?.snapshot?.queryParams['template'] || 'Choose') }}</button>
                                     <ul class="dropdown-menu">
                                         <li *ngFor="let template of templates">
-                                            <a (click)="router.navigate(['questionVoting'], {queryParams : {template: template.$key, bag: 'choose' }})">{{ template.$key | uppercase }}</a>
+                                            <a (click)="router.navigate(['questionVoting'], {queryParams : {template: template.$key, bag: 'choose' }})">{{ template.$key }}</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -26,10 +26,10 @@
 
                             <div class="col-md-6">
                                 <div class="dropdown" dropdown [dropdownToggle]="false" (onClose)="initList()">
-                                    <button class="btn btn-default select" dropdown-open>{{ route?.snapshot?.queryParams['bag'] | uppercase }}</button>
+                                    <button class="btn btn-default select" dropdown-open>{{ route?.snapshot?.queryParams['bag'] }}</button>
                                     <ul class="dropdown-menu">
                                         <li *ngFor="let bagName of questionBags">
-                                            <a (click)="router.navigate(['questionVoting'], {queryParams : {template: route?.snapshot?.queryParams['template'], bag: bagName.$key }})">{{ bagName.$key | uppercase }}</a>
+                                            <a (click)="router.navigate(['questionVoting'], {queryParams : {template: route?.snapshot?.queryParams['template'], bag: bagName.$key }})">{{ bagName.$key }}</a>
                                         </li>
                                     </ul>
                                 </div>            
