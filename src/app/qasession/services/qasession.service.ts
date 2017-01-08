@@ -25,7 +25,7 @@ export class QasessionService {
     currentBag: string = "bag1"
 
     constructor(public af: AngularFire, auth: AuthService) {
-        this.userPath = '/sessions/' + auth.id;
+        this.userPath = '/users/' + auth.id + '/sessions';
         this.sessions$ = af.database.list(this.userPath);
         this.reference$ = af.database.object('/reference');
         this.reference$.subscribe(ref => {

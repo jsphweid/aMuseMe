@@ -22,7 +22,7 @@ export class MySessionsComponent {
     qaData: qaObject[];
 
     constructor(public af: AngularFire, public auth: AuthService, public router: Router) {
-        this.userPath = '/sessions/' + auth.id;
+        this.userPath = '/users/' + auth.id + '/sessions';
         this.sessions$ = af.database.list(this.userPath);
         this.sessions$.subscribe(sessions => {
             this.sessions = sessions.concat([]).sort((a,b) => b.createTime - a.createTime)
