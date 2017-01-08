@@ -14,22 +14,22 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="dropdown" dropdown [dropdownToggle]="false" (onClose)="templateChosen()">
-                                    <button class="btn btn-default select" dropdown-open>{{ (route?.snapshot?.queryParams['template'] || 'Choose') }}</button>
+                                <div class="dropdown" dropdown [dropdownToggle]="false">
+                                    <button class="btn btn-default select" dropdown-open>{{ voter?.template || 'Choose' }}</button>
                                     <ul class="dropdown-menu">
-                                        <li *ngFor="let template of templates">
-                                            <a (click)="router.navigate(['questionVoting'], {queryParams : {template: template.$key, bag: 'choose' }})">{{ template.$key }}</a>
+                                        <li *ngFor="let template of voter.templates">
+                                            <a (click)="router.navigate(['questionVoting'], {queryParams : {template: template.$key, bag: voter.bag }})">{{ template.$key }}</a>
                                         </li>
                                     </ul>
                                 </div>
                             </div> 
 
                             <div class="col-md-6">
-                                <div class="dropdown" dropdown [dropdownToggle]="false" (onClose)="initList()">
-                                    <button class="btn btn-default select" dropdown-open>{{ route?.snapshot?.queryParams['bag'] }}</button>
+                                <div class="dropdown" dropdown [dropdownToggle]="false">
+                                    <button class="btn btn-default select" dropdown-open>{{ voter?.bag || 'Choose'}}</button>
                                     <ul class="dropdown-menu">
-                                        <li *ngFor="let bagName of questionBags">
-                                            <a (click)="router.navigate(['questionVoting'], {queryParams : {template: route?.snapshot?.queryParams['template'], bag: bagName.$key }})">{{ bagName.$key }}</a>
+                                        <li *ngFor="let bagName of voter.questionBags">
+                                            <a (click)="router.navigate(['questionVoting'], {queryParams : {template: voter.template, bag: bagName.$key }})">{{ bagName.$key }}</a>
                                         </li>
                                     </ul>
                                 </div>            
@@ -44,10 +44,10 @@
                             <p>Select a template to submit a question. Or select a template and bag to view the questions in there.</p>
                         </div>
 
-                        <div class="row" *ngIf="currentTemplate">
+                        <div class="row" *ngIf="voter.bag === 'userSubmitted'">
                             <!--add new question-->
-                            <div class="newQuestion" *ngIf="isUserSubmitted">
-                                <p>Submit a new question to the <b>{{ route?.snapshot?.queryParams['template'] }}</b> database</p>
+                            <div class="newQuestion">
+                                <p>Submit a new question to the <b>{{ voter?.template }}</b> database</p>
                                 <textarea class="form-control" rows="4" id="submittedAnswer" [(ngModel)]="questionSubmitTextArea"></textarea>
                                 <span style="float: right">
                                     <button class="btn btn-default" (click)="submitQuestion()">Submit</button>    
@@ -81,11 +81,11 @@
                     </div>
 
                     <div class="upvoteArea">
-                        <table>
-                            <tr *ngFor="let q of currentQuestionList">
+                        <table *ngIf="voter.votingObj">  
+                            <tr *ngFor="let q of voter.currentQuestionList">
                                 <td>{{ q.votes }}</td>
-                                <td><button class="btn btn-default" (click)="upvote(route?.snapshot?.queryParams['template'], route?.snapshot?.queryParams['bag'], q)"><span class="glyphicon glyphicon-thumbs-up"></span></button></td>
-                                <td><button class="btn btn-default" (click)="downvote(route?.snapshot?.queryParams['template'], route?.snapshot?.queryParams['bag'], q)"><span class="glyphicon glyphicon-thumbs-down"></span></button></td>
+                                <td><button class="btn btn-default" [disabled]="voter.getVotingRecord(q.$key) === 1" (click)="voter.upvote(voter.template, voter.bag, q)"><span class="glyphicon glyphicon-thumbs-up"></span></button></td>
+                                <td><button class="btn btn-default" [disabled]="voter.getVotingRecord(q.$key) === -1" (click)="voter.downvote(voter.template, voter.bag, q)"><span class="glyphicon glyphicon-thumbs-down"></span></button></td>
                                 <td>{{ q.question }}</td>
                             </tr>
                         </table>

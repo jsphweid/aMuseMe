@@ -32,7 +32,7 @@ import { QASessionComponent } from './qasession/components/qasession.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ReaderComponent } from './shared/reader/reader.component';
 import { RecreatorComponent } from './app.component';
-import { QuestionVotingComponent } from './question-voting/question-voting.component';
+import { QuestionVotingComponent } from './voting/components/question-voting/question-voting.component';
 import { MySessionsComponent } from './my-sessions/my-sessions.component';
 import { NotAuthenticatedComponent } from './errors.component';
 import { RebuildQuestionsComponent } from './rebuild/rebuild-questions/rebuild-questions.component';
@@ -41,6 +41,7 @@ import { AuthGuard } from '../auth/guards/auth-guard';
 import { UnauthGuard } from '../auth/guards/unauth-guard';
 
 import { QasessionService } from './qasession/services/qasession.service';
+import { VotingService } from './voting/services/voting.service';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyAhK6cZF-p6UW8OI0saGRPxEJ1YvIkv8jI",
@@ -96,7 +97,8 @@ const myFirebaseAuthConfig = {
         AuthService,
         QasessionService,
         AuthGuard,
-        UnauthGuard
+        UnauthGuard,
+        VotingService
         ],
     bootstrap: [AppComponent]
 })
