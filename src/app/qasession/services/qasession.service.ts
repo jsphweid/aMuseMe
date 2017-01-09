@@ -56,6 +56,7 @@ export class QasessionService {
     }
 
     createNewSession(template: string) {
+        this.currentBag = this.bagOrder[0];
         this.template = template;
         this.currentQuestionIndex = 0;
         this.sessions$.push({
