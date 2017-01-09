@@ -13,7 +13,7 @@ export class AuthService {
         });
         this.af.auth.subscribe(user => {
             this.user = user ? user : {};
-            this.anonymous = user.anonymous;
+            this.anonymous = user ? user.anonymous : null;
         });
     }
 

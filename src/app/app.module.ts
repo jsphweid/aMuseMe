@@ -87,7 +87,7 @@ const myFirebaseAuthConfig = {
             { path: 'recreator', component: RecreatorComponent },
             { path: 'questionVoting', component: QuestionVotingComponent, canActivate: [AuthGuard] },
             { path: 'mySessions', component: MySessionsComponent, canActivate: [AuthGuard] },
-            { path: 'notAuthenticated', component: NotAuthenticatedComponent },
+            { path: 'notAuthenticated', component: NotAuthenticatedComponent, canActivate: [UnauthGuard] },
             { path: 'rebuildQuestions', component: RebuildQuestionsComponent },
             { path: '', redirectTo: 'welcome', pathMatch: 'full' },
             { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
