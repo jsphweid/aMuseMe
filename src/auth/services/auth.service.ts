@@ -4,6 +4,7 @@ import { AngularFireAuth, AuthProviders, AuthMethods, FirebaseAuth, FirebaseAuth
 @Injectable()
 export class AuthService {
     user: {} = {};
+    anonymous: boolean;
     private authState: FirebaseAuthState = null;
 
     constructor (public auth$: FirebaseAuth, public af: AngularFire) {
@@ -12,6 +13,7 @@ export class AuthService {
         });
         this.af.auth.subscribe(user => {
             this.user = user ? user : {};
+            this.anonymous = user.anonymous;
         });
     }
 

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, NavigationEnd, Route } from '@angular/router';
 import { QasessionService } from '../services/qasession.service';
 import { qaObject } from '../../shared/interfaces';
 import { ReaderComponent } from '../../shared/reader/reader.component';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
     selector: 'app-qasession',
@@ -19,8 +20,10 @@ export class QASessionComponent implements OnInit, OnDestroy {
     qaData: qaObject[];
     titleValue: string = "";
     stashIt: boolean = true;
+    isAnonymous: boolean;
 
-    constructor(public route: ActivatedRoute, public router: Router, public qaService: QasessionService) {
+    constructor(public route: ActivatedRoute, public router: Router, public qaService: QasessionService, public auth: AuthService) {
+        this.isAnonymous = auth.anonymous;
     }
 
     ngOnInit() {

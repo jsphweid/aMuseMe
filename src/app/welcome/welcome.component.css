@@ -1,0 +1,12 @@
+.welcome {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.welcome h3, p {
+    text-align: center;
+}
+
+p {
+    padding-bottom: 13px; 
+}

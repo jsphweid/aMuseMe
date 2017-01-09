@@ -21,8 +21,9 @@
     </div>
 
     <div class="panel-body">
-        <p *ngIf="">
-            
+        <p *ngIf="isAnonymous" style="text-align: center;">
+            You are currently logged in anonymously which means you can access the entire site but 
+            your data will be lost when you clear your cache / log in as another user.
         </p>
         <div *ngIf="qaService?.askingQuestions" >
             <div *ngIf="qaService?.bagList">
