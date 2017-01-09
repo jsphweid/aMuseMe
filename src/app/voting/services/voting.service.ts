@@ -20,9 +20,11 @@ export class VotingService {
     votingObj: any;
     voting$: FirebaseListObservable<any>;
 
-    currentQuestionObservable: FirebaseListObservable<any[]>;
-    currentQuestionList: any[];
-    bag$: FirebaseListObservable<any>;
+    isJoseph: boolean = false;
+
+    currentBag: any[];
+    currentBag$: FirebaseListObservable<any>;
+
     userSubmitted: any;
     isUserSubmitted: boolean;
 
@@ -44,6 +46,11 @@ export class VotingService {
         this.votingObj$ = af.database.object('/users/' + auth.id + '/voting');
         this.votingObj$.subscribe(votingObj => this.votingObj = votingObj);
 
+        // if me
+        if (auth.id === "u6W2C7PjGKejWTUTmi6K77fsq5h2") {
+            console.log("Welcome, Joseph.");
+            this.isJoseph = true;
+        }
     }
 
     handleVote(qKey, value) {
@@ -62,7 +69,7 @@ export class VotingService {
 
     downvote(template, bag, q) {
         let question: FirebaseListObservable<any> = this.af.database.list('/reference/' + template + '/questions/' + bag);
-        if (bag === "userSubmitted" && q.votes < -4 && this.currentQuestionList.length > 1) {
+        if (bag === "userSubmitted" && q.votes < -4 && this.currentBag.length > 1) {
             question.remove(q.$key)
         } else {
             question.update(q.$key, { votes: q.votes - 1 });
@@ -71,16 +78,11 @@ export class VotingService {
     }
 
     initList() {
-        this.currentQuestionObservable = this.af.database.list('reference/' + this.template + '/questions/' + this.bag);
-        this.currentQuestionObservable.subscribe(questions => {
-            this.currentQuestionList = questions.concat([]).slice().reverse();
+        this.currentBag$ = this.af.database
+            .list('reference/' + this.template + '/questions/' + this.bag);
+        this.currentBag$.subscribe(questions => {
+            this.currentBag = questions.concat([]).slice().reverse();
         });
-        this.bag$ = this.af.database.list('reference/' +
-            this.template + '/questions/userSubmitted');
-        this.bag$.subscribe(bag => {
-            this.userSubmitted = bag;
-        });
-
     }
 }
 

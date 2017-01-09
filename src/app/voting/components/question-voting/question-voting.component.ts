@@ -18,7 +18,7 @@ export class QuestionVotingComponent {
     }
 
     submitQuestion() {
-        this.voter.bag$.push({
+        this.voter.currentBag$.push({
             question: this.questionSubmitTextArea,
             votes: 0
         });
@@ -26,21 +26,21 @@ export class QuestionVotingComponent {
     }
 
     changeSort(sortMethod) {
-        this.voter.currentQuestionObservable.subscribe(questions => {
+        this.voter.currentBag$.subscribe(questions => {
             switch (sortMethod) {
                 case "mostVotes":
-                    this.voter.currentQuestionList = questions.concat([]).sort((a, b) => b.votes - a.votes);
+                    this.voter.currentBag = questions.concat([]).sort((a, b) => b.votes - a.votes);
                     this.currentSortMethod = "most votes";
                     break;
                 case "leastVotes":
-                    this.voter.currentQuestionList = questions.concat([]).sort((a, b) => a.votes - b.votes);
+                    this.voter.currentBag = questions.concat([]).sort((a, b) => a.votes - b.votes);
                     this.currentSortMethod = "least votes";
                     break;
                 case "freshest":
-                    this.voter.currentQuestionList = questions.concat([]).slice().reverse();
+                    this.voter.currentBag = questions.concat([]).slice().reverse();
                     this.currentSortMethod = "freshest";
                     break;
-            }
+            };
         });
     }
 }

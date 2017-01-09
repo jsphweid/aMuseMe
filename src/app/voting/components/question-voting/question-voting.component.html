@@ -44,7 +44,7 @@
                             <p>Select a template to submit a question. Or select a template and bag to view the questions in there.</p>
                         </div>
 
-                        <div class="row" *ngIf="voter.bag === 'userSubmitted'">
+                        <div class="row" *ngIf="(voter.bag === 'userSubmitted') || voter.isJoseph">
                             <!--add new question-->
                             <div class="newQuestion">
                                 <p>Submit a new question to the <b>{{ voter?.template }}</b> database</p>
@@ -82,7 +82,7 @@
 
                     <div class="upvoteArea">
                         <table *ngIf="voter.votingObj">  
-                            <tr *ngFor="let q of voter.currentQuestionList">
+                            <tr *ngFor="let q of voter.currentBag">
                                 <td>{{ q.votes }}</td>
                                 <td><button class="btn btn-default" [disabled]="voter.getVotingRecord(q.$key) === 1" (click)="voter.upvote(voter.template, voter.bag, q)"><span class="glyphicon glyphicon-thumbs-up"></span></button></td>
                                 <td><button class="btn btn-default" [disabled]="voter.getVotingRecord(q.$key) === -1" (click)="voter.downvote(voter.template, voter.bag, q)"><span class="glyphicon glyphicon-thumbs-down"></span></button></td>

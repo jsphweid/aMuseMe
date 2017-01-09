@@ -21,7 +21,10 @@
     </div>
 
     <div class="panel-body">
-        <div>
+        <p *ngIf="">
+            
+        </p>
+        <div *ngIf="qaService?.askingQuestions" >
             <div *ngIf="qaService?.bagList">
                
                 <!-- question header -->
