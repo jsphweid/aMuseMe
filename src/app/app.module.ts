@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
 // bootstrap
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Modal Modules
 import { ModalModule } from 'ng2-modal'
@@ -91,7 +91,7 @@ const myFirebaseAuthConfig = {
             { path: 'rebuildQuestions', component: RebuildQuestionsComponent },
             { path: '', redirectTo: 'welcome', pathMatch: 'full' },
             { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
-        ])
+        ], { useHash: true })
     ],
     providers: [
         AuthService,
