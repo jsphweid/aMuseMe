@@ -1,26 +1,28 @@
 <div class="mySidebar panel panel-default">
-  <ul>
-    <li class="sidebar-brand">
-      <a [routerLink]="['/welcome']">aMuseMe Home</a>
-    </li>
-    <li>
-      <div class="container-fluid">
-        <div class="row">Select QA Template</div>
-        <div class="row">
-          <button class="templateButton" (click)="router.navigate(['recreator'], {queryParams : {template: 'song' }})">Song</button>
-          <button class="templateButton" (click)="router.navigate(['recreator'], {queryParams : {template: 'story'}})">Story</button>
-        </div>
-      </div>
-    </li>
-    <li>
-      <a [routerLink]="['/mySessions']">My Sessions</a>
-    </li>
-    <li>
-      <a [routerLink]="['/questionVoting']">Questions - Add / Vote</a>
-    </li>
+    <ul>
+        <li class="sidebar-brand">
+            <a [routerLink]="['/welcome']">aMuseMe Home</a>
+        </li>
+        <li>
+            <div class="container-fluid">
+                <div class="row">Select QA Template</div>
+                <div class="row">
+                    <button class="templateButton" (click)="router.navigate(['recreator'], {queryParams : {template: 'song' }})">Song</button>
+                    <button class="templateButton" (click)="router.navigate(['recreator'], {queryParams : {template: 'story'}})">Story</button>
+                    <button class="templateButton" (click)="router.navigate(['recreator'], {queryParams : {template: 'app'}})">App</button>
 
-    <!--<li>
-        <a [routerLink]="['/rebuildQuestions']">**rebuild questions</a>
-    </li>-->
-  </ul>
+                </div>
+            </div>
+        </li>
+        <li>
+            <a [routerLink]="['/mySessions']">My Sessions</a>
+        </li>
+        <li>
+            <a [routerLink]="['/questionVoting']">Questions - Add / Vote</a>
+        </li>
+
+        <!--<li>
+            <a [routerLink]="['/rebuildQuestions']">**rebuild questions</a>
+        </li>-->
+    </ul>
 </div>
