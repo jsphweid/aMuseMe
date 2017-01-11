@@ -11,13 +11,9 @@ import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 // bootstrap
 // import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-// Modal Modules
 import { ModalModule } from 'ng2-modal'
-// DropdownModule
-import { DropdownModule } from "ng2-dropdown";
-// moment
 import { MomentModule } from "angular2-moment"; // amTimeAgo, but where the hell does that get introduced????
-
+import { SelectModule } from "ng2-select";
 
 // Login Service
 import { AuthService } from '../auth/services/auth.service';
@@ -77,10 +73,10 @@ const myFirebaseAuthConfig = {
         CommonModule,
         HttpModule,
         ModalModule,
-        DropdownModule,
         MomentModule,
         AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig),
         FormsModule,
+        SelectModule,
         RouterModule.forRoot([
             { path: 'welcome', component: WelcomeComponent },
             { path: 'qasession', component: QASessionComponent, canActivate: [AuthGuard] },

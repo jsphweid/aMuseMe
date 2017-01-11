@@ -7,15 +7,13 @@ import { ActivatedRoute } from '@angular/router';
 @Injectable()
 export class VotingService {
 
+    questions$: FirebaseListObservable<any>;
+    templates: Array<string>;
     template: string;
-    templates: any[];
-
-    bags$: FirebaseListObservable<any>;
     bag: string;
+    simpleTemplateBag: {} = {};
 
-    questionBags: any;
 
-    questions$: FirebaseListObservable<any[]>;
     votingObj$: FirebaseObjectObservable<any>;
     votingObj: any;
     voting$: FirebaseListObservable<any>;
@@ -33,14 +31,19 @@ export class VotingService {
             this.template = params['template'];
             this.bag = params['bag'];
             this.initList();
-            this.bags$ = this.af.database.list('/reference/' + this.template + '/questions');
-            this.bags$.subscribe(bags => {
-                this.questionBags = bags;
-            });
         });
+        // traverse and get templates and bags in one swing
         this.questions$ = af.database.list('/reference');
         this.questions$.subscribe(templates => {
-            this.templates = templates;
+            for (let i = 0; i < templates.length; i++) {
+                let k = templates[i].$key;
+                let v = [];
+                for (let j = 0; j < Object.keys(templates[i].questions).length; j++) {
+                    v.push(Object.keys(templates[i].questions)[j]);
+                }
+                this.simpleTemplateBag[k] = v;
+            }
+            this.templates = Object.keys(this.simpleTemplateBag);
         });
         this.voting$ = af.database.list('/users/' + auth.id + '/voting');
         this.votingObj$ = af.database.object('/users/' + auth.id + '/voting');

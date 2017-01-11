@@ -1,41 +1,22 @@
 <div class="container-fluid">
     <div class="row">
+        <div class="panel panel-default" style="padding: 20px;">
+            <div class="container-fluid">
+                <h1>Questions - Add / Vote</h1>
+                <p>
+                    During a session, the questions that you are prompted with come from several
+                    "bags." Every session starts out with the same questions in the same order.
+                    After those, the questions are selected from a bag that contains questions
+                    that any one can submit. The order used in that bag: most popular first.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <div class="container-fluid">
-                        <div class="row" style="text-align: center;">
-                            <div class="col-md-6">
-                                Template:
-                            </div>
-                            <div class="col-md-6">
-                                Bag:
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="dropdown" dropdown [dropdownToggle]="false">
-                                    <button class="btn btn-default select" dropdown-open>{{ voter?.template || 'Choose' }}</button>
-                                    <ul class="dropdown-menu">
-                                        <li *ngFor="let template of voter.templates">
-                                            <a (click)="router.navigate(['questionVoting'], {queryParams : {template: template.$key, bag: voter.bag }})">{{ template.$key }}</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div> 
-
-                            <div class="col-md-6">
-                                <div class="dropdown" dropdown [dropdownToggle]="false">
-                                    <button class="btn btn-default select" dropdown-open>{{ voter?.bag || 'Choose'}}</button>
-                                    <ul class="dropdown-menu">
-                                        <li *ngFor="let bagName of voter.questionBags">
-                                            <a (click)="router.navigate(['questionVoting'], {queryParams : {template: voter.template, bag: bagName.$key }})">{{ bagName.$key }}</a>
-                                        </li>
-                                    </ul>
-                                </div>            
-                            </div>         
-                        </div>
-                    </div>
+                    <h3 class="addVoteTitle">Add</h3>
                 </div>
 
                 <div class="panel-body">
@@ -43,53 +24,80 @@
                         <div class="row" *ngIf="!currentTemplate">
                             <p>Select a template to submit a question. Or select a template and bag to view the questions in there.</p>
                         </div>
-
+                        <div class="row">
+                            <div *ngIf="voter?.templates?.length > 0" class="col-md-6">
+                                <ng-select [allowClear]="true"
+                                           [items]="voter.templates"
+                                           (selected)="selectTemplate($event)"
+                                           placeholder="Template...">
+                                </ng-select>
+                            </div>
+                            <div *ngIf="voter.template" class="col-md-6">
+                                <ng-select [allowClear]="true"
+                                           [items]="voter.simpleTemplateBag[voter.template]"
+                                           (selected)="selectBag($event)"
+                                           placeholder="Question Bag...">
+                                </ng-select>
+                            </div>
+                        </div>
                         <div class="row" *ngIf="(voter.bag === 'userSubmitted') || voter.isJoseph">
                             <!--add new question-->
                             <div class="newQuestion">
                                 <p>Submit a new question to the <b>{{ voter?.template }}</b> database</p>
                                 <textarea class="form-control" rows="4" id="submittedAnswer" [(ngModel)]="questionSubmitTextArea"></textarea>
                                 <span style="float: right">
-                                    <button class="btn btn-default" (click)="submitQuestion()">Submit</button>    
+                                    <button class="btn btn-default" (click)="submitQuestion()">Submit</button>
                                 </span>
-                            </div>      
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
 
         <!--upvote area-->
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h1>Question Voting</h1>
-                    <p>
-                        If a question that is user submitted and has a score of less than -5, it will be deleted.
-                    </p>
+                    <h3 class="addVoteTitle">Vote</h3>
                 </div>
                 <div class="panel-body">
 
-                    <div class="dropdown" dropdown [dropdownToggle]="false">
-                        <span>Sort: </span>
-                        <button class="btn btn-default select" dropdown-open>{{ currentSortMethod }}</button>
-                        <ul class="dropdown-menu">
-                            <li><a (click)="changeSort('mostVotes')">most votes</a></li>
-                            <li><a (click)="changeSort('leastVotes')">least votes</a></li>
-                            <li><a (click)="changeSort('freshest')">freshest</a></li>
-                        </ul>
+                    <div *ngIf="!voter.bag">
+                        <h3>Select a template and bag first.</h3>
                     </div>
 
-                    <div class="upvoteArea">
-                        <table *ngIf="voter.votingObj">  
-                            <tr *ngFor="let q of voter.currentBag">
-                                <td>{{ q.votes }}</td>
-                                <td><button class="btn btn-default" [disabled]="voter.getVotingRecord(q.$key) === 1" (click)="voter.upvote(voter.template, voter.bag, q)"><span class="glyphicon glyphicon-thumbs-up"></span></button></td>
-                                <td><button class="btn btn-default" [disabled]="voter.getVotingRecord(q.$key) === -1" (click)="voter.downvote(voter.template, voter.bag, q)"><span class="glyphicon glyphicon-thumbs-down"></span></button></td>
-                                <td>{{ q.question }}</td>
-                            </tr>
-                        </table>
+                    <div *ngIf="voter.bag" class="container-fluid">
+                        <div class="row">
+                            <p>
+                                If a question that is user submitted and has a score of less than -5, it will be deleted.
+                            </p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span style="float: right; margin: 7px;">Sort By:</span>
+                            </div>
+                            <div *ngIf="voter.template" class="col-md-6">
+                                <ng-select [allowClear]="true"
+                                           [items]="['mostVotes', 'leastVotes', 'freshest']"
+                                           [active]="['freshest']"
+                                           (selected)="changeSort($event)">
+                                </ng-select>
+                            </div>
+                        </div>
+
+                        <div class="upvoteArea">
+                            <table>
+                                <tr *ngFor="let q of voter.currentBag">
+                                    <td>{{ q.votes }}</td>
+                                    <td><button class="btn btn-default" [disabled]="voter.getVotingRecord(q.$key) === 1" (click)="voter.upvote(voter.template, voter.bag, q)"><span class="glyphicon glyphicon-thumbs-up"></span></button></td>
+                                    <td><button class="btn btn-default" [disabled]="voter.getVotingRecord(q.$key) === -1" (click)="voter.downvote(voter.template, voter.bag, q)"><span class="glyphicon glyphicon-thumbs-down"></span></button></td>
+                                    <td>{{ q.question }}</td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>

@@ -29,6 +29,7 @@
     "ng2-dropdown": "0.0.21",
     "ng2-inline-editor": "^0.1.1-alpha.9",
     "ng2-modal": "0.0.24",
+    "ng2-select": "^1.1.2",
     "rxjs": "^5.0.2",
     "ts-helpers": "^1.1.1",
     "zone.js": "^0.7.2"

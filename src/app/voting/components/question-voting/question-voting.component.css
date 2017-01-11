@@ -3,6 +3,19 @@
     height: 34px;
 }
 
+h1 {
+    margin: 10px;
+}
+
+p {
+    margin: 10px;
+}
+
+.addVoteTitle {
+    text-align: center;
+    margin: 5px;
+}
+
 .upvoteArea td {
     padding-left: 5px;
     padding-right: 5px;

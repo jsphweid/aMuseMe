@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
-import { DropdownModule } from "ng2-dropdown";
 import { VotingService } from '../../services/voting.service';
 import { Router } from '@angular/router';
 
@@ -11,11 +9,21 @@ import { Router } from '@angular/router';
 })
 export class QuestionVotingComponent {
 
+
     questionSubmitTextArea: string;
     currentSortMethod: string = "freshest";
 
     constructor(public voter: VotingService, public router: Router) {
+
     }
+
+    selectTemplate(item) {
+        this.router.navigate(['questionVoting'], {queryParams : {template: item.text, bag: this.voter.bag }});
+    }
+    selectBag(item) {
+        this.router.navigate(['questionVoting'], {queryParams : {template: this.voter.template, bag: item.text }});
+    }
+
 
     submitQuestion() {
         this.voter.currentBag$.push({
@@ -27,7 +35,7 @@ export class QuestionVotingComponent {
 
     changeSort(sortMethod) {
         this.voter.currentBag$.subscribe(questions => {
-            switch (sortMethod) {
+            switch (sortMethod.text) {
                 case "mostVotes":
                     this.voter.currentBag = questions.concat([]).sort((a, b) => b.votes - a.votes);
                     this.currentSortMethod = "most votes";
