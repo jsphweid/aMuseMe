@@ -20,49 +20,100 @@
 //                 bag1: [],
 //                 userSubmitted: []
 //             }
+//         },
+//         app: {
+//             questions: {
+//                 bag1: [],
+//                 userSubmitted: []
+//             }
 //         }
 //     };
 //
 //     storyBag1: any[] = [
-//                     {
-//                         question: 'Where are we?',
-//                         votes: 0
-//                     },
-//                     {
-//                         question: 'Who/What is there?',
-//                         votes: 0
-//                     },
-//                     {
-//                         question: 'What are they doing?',
-//                         votes: 0
-//                     }
-//                 ];
+//         {
+//             question: 'Where are we?',
+//             votes: 0
+//         },
+//         {
+//             question: 'Who/What is there?',
+//             votes: 0
+//         },
+//         {
+//             question: 'What are they doing?',
+//             votes: 0
+//         },
+//         {
+//             question: 'How does this fit into a larger story?',
+//             votes: 0
+//         },
+//         {
+//             question: 'What is the conflict?',
+//             votes: 0
+//         }
+//
+//     ];
 //     storyUserSubmitted: any[] = [
-//                     {
-//                         question: 'User Submitted Story Question 1',
-//                         votes: 0
-//                     }
-//                 ];
+//         {
+//             question: 'Describe the setting in extreme detail',
+//             votes: 0
+//         }
+//     ];
 //     songBag1: any[] = [
-//                     {
-//                         question: 'What is the first chord?',
-//                         votes: 0
-//                     },
-//                     {
-//                         question: 'What is the key?',
-//                         votes: 0
-//                     },
-//                     {
-//                         question: 'What is the song about?',
-//                         votes: 0
-//                     }
-//                 ];
+//         {
+//             question: 'What is the first chord?',
+//             votes: 0
+//         },
+//         {
+//             question: 'What is the key?',
+//             votes: 0
+//         },
+//         {
+//             question: 'What is the song about?',
+//             votes: 0
+//         },
+//         {
+//             question: 'How would you describe the character of the song?',
+//             votes: 0
+//         },
+//         {
+//             quesiton: 'What is the form of the song?',
+//             votes: 0
+//         }
+//     ];
 //     songUserSubmited: any[] = [
-//                     {
-//                         question: 'User Submitted Song Question 1',
-//                         votes: 0
-//                     }
-//                 ];
+//         {
+//             question: 'What sets this song apart from other songs?',
+//             votes: 0
+//         }
+//     ];
+//     appBag1: any[] = [
+//         {
+//             question: 'Describe the purpose of this app in one sentence.',
+//             votes: 0
+//         },
+//         {
+//             question: 'Will this app make money? If so, how?',
+//             votes: 0
+//         },
+//         {
+//             question: 'What platform / devices will this app target?',
+//             votes: 0
+//         },
+//         {
+//             question: 'What audience will this app target?',
+//             votes: 0
+//         },
+//         {
+//             question: 'How long do you expect development to take? With how many people?',
+//             votes: 0
+//         }
+//     ];
+//     appUserSubmited: any[] = [
+//         {
+//             question: 'Is this app sufficiently different from other apps that are similar?',
+//             votes: 0
+//         }
+//     ];
 //
 //     reference$: FirebaseObjectObservable<any>;
 //     referenceList$: FirebaseListObservable<any[]>;
@@ -80,6 +131,7 @@
 //         for (let i = 0; i < this.storyUserSubmitted.length; i++) {
 //             this.referenceList$.push(this.storyUserSubmitted[i]);
 //         }
+//
 //         this.referenceList$ = af.database.list('/reference/song/questions/bag1');
 //         for (let i = 0; i < this.songBag1.length; i++) {
 //             this.referenceList$.push(this.songBag1[i]);
@@ -87,6 +139,15 @@
 //         this.referenceList$ = af.database.list('/reference/song/questions/userSubmitted');
 //         for (let i = 0; i < this.songUserSubmited.length; i++) {
 //             this.referenceList$.push(this.songUserSubmited[i]);
+//         }
+//
+//         this.referenceList$ = af.database.list('/reference/app/questions/bag1');
+//         for (let i = 0; i < this.appBag1.length; i++) {
+//             this.referenceList$.push(this.appBag1[i]);
+//         }
+//         this.referenceList$ = af.database.list('/reference/app/questions/userSubmitted');
+//         for (let i = 0; i < this.appUserSubmited.length; i++) {
+//             this.referenceList$.push(this.appUserSubmited[i]);
 //         }
 //     }
 //
