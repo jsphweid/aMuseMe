@@ -5,6 +5,9 @@
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
+    "build": "npm run clean && ng build --prod --aot",
+    "clean": "rm -rf ./dist/",
+    "deploy": "npm run build && ./deploy.sh",
     "start": "ng serve",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
